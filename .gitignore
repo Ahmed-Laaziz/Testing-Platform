@@ -1,0 +1,14 @@
+# Node modules for both projects
+/Back-End/node_modules
+/client/
+
+
+# Logs
+*.log
+
+# Build directories
+/client/build
+/client/dist
+
+# Environment variables
+.env
