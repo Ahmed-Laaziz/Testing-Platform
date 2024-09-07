@@ -1,6 +1,6 @@
 # Node modules for both projects
 /Back-End/node_modules
-/client/
+/client/node_modules
 
 
 # Logs
