@@ -1,6 +1,6 @@
 const User = require("../../models/users/user");
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "RandomJWTSecretKey123"
+const JWT_SECRET = process.env.SECRET_KEY;
 const bcrypt = require('bcrypt');
 
 

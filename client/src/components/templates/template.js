@@ -10,6 +10,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { useNavigate } from 'react-router-dom'; // Import the navigation hook
 
 const NAVIGATION = [
   {
@@ -34,18 +35,18 @@ const NAVIGATION = [
     title: 'Analytics',
   },
   {
-    segment: 'reports',
-    title: 'Reports',
+    segment: 'datasets',
+    title: 'Datasets',
     icon: <BarChartIcon />,
     children: [
       {
-        segment: 'sales',
-        title: 'Sales',
+        segment: 'assets',
+        title: 'Assets',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'traffic',
-        title: 'Traffic',
+        segment: 'cases',
+        title: 'Cases',
         icon: <DescriptionIcon />,
       },
     ],
@@ -75,17 +76,7 @@ const demoTheme = createTheme({
 
 function Template({ pathname }) {
   return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography>Dashboard content for {pathname}</Typography>
-    </Box>
+   <></>
   );
 }
 
@@ -93,44 +84,55 @@ Template.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
 
-function DashboardLayoutBasic(props) {
-  const { window } = props;
-
+function DashboardLayoutBasic({ window, component: CustomComponent }) {
   const [pathname, setPathname] = React.useState('/dashboard');
+  const navigate = useNavigate();  // Use navigate to change URL
+
+  const handleNavigationClick = (segment) => {
+    const newPath = `${segment}`;
+    setPathname(newPath);
+    navigate(newPath);  // Change the URL
+  };
 
   const router = React.useMemo(() => {
     return {
       pathname,
       searchParams: new URLSearchParams(),
-      navigate: (path) => setPathname(String(path)),
+      navigate: handleNavigationClick,
     };
   }, [pathname]);
 
-  // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
 
   return (
-    // preview-start
     <AppProvider
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
       window={demoWindow}
     >
-      <DashboardLayout>
+      <DashboardLayout
+        onNavigate={(segment) => handleNavigationClick(segment)} // Handle navigation on click
+      >
         <Template pathname={pathname} />
+        {CustomComponent && (
+          <Box
+            sx={{
+              margin: 2, // Adds space around the CustomComponent
+              padding: 2, // Optional: Adds space inside the border of the CustomComponent
+            }}
+          >
+            <CustomComponent />
+          </Box>
+        )}
       </DashboardLayout>
     </AppProvider>
-    // preview-end
   );
 }
 
 DashboardLayoutBasic.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
   window: PropTypes.func,
+  component: PropTypes.elementType,
 };
 
 export default DashboardLayoutBasic;

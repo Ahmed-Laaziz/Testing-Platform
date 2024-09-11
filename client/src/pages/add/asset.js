@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import ErrorPage from '../error/404';
 import DashboardLayoutBasic from '../../components/templates/template';
-import DataTable from '../../components/tables/assets/dataTable';  // Import the table
+import AddAsset from '../../components/add-element/add_asset';  // Import the table
 
 const backLink = process.env.REACT_APP_BACK_LINK;
 
@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <div>
       {isTokenValid ? (
-        <DashboardLayoutBasic component={DataTable} />  // Pass the table component when rendering the dashboard
+        <DashboardLayoutBasic component={AddAsset} />  // Pass the table component when rendering the dashboard
       ) : showErrorPage ? (
         <ErrorPage />
       ) : (

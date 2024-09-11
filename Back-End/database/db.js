@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const USERNAME = "laazizahmed72"
-const PASSWORD = "QAautomation"
-const CLUSTER_URL = "cluster0.pup91.mongodb.net"
-const DB_NAME = "Testing_Platform_DB"
-const APP_NAME = "Cluster0"
+const USERNAME = process.env.USERNAME_DB;
+const PASSWORD = process.env.PASSWORD_DB;
+const CLUSTER_URL = process.env.CLUSTER_URL;
+const DB_NAME = process.env.DB_NAME;
+const APP_NAME = process.env.APP_NAME;
 
 const connectDB = async () => {
   try {
