@@ -15,9 +15,11 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Description from '@mui/icons-material/Description';
-
-const backLink = process.env.REACT_APP_BACK_LINK;
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/DoDisturbAlt';
+const backLink = "http://localhost:5000";
 
 export default function ValidationTextFields() {
 
@@ -28,6 +30,18 @@ export default function ValidationTextFields() {
     const [brand, setBrand] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [inflight, setInflight] = React.useState('false');
+    const [open, setOpen] = React.useState(false);
+    
+    const handleClick = () => {
+      setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpen(false);
+    };
 
     const handleChangeIdentifier = (event) => {
         setIdentifier(event.target.value);
@@ -99,7 +113,9 @@ export default function ValidationTextFields() {
               Authorization: `Bearer ${token}`,
             },
           });
-          navigate('/datasets/assets')
+          // Show success Snackbar
+          handleClick();
+          setTimeout(() => navigate('/datasets/assets'), 2000); // Redirect after 2 seconds
         } catch (error) {
           console.error("Error fetching abstract:", error);
         } finally {
@@ -109,6 +125,13 @@ export default function ValidationTextFields() {
       };
       
   return (
+    <>
+    {/* Snackbar for success message */}
+  <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+  <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+    Asset created successfully!
+  </Alert>
+</Snackbar>
     <Paper elevation={3} >
         <>&nbsp;</>
         <center><h3>&nbsp;Add New Asset</h3></center>
@@ -201,12 +224,12 @@ export default function ValidationTextFields() {
     </Grid>
 
     <Grid size={2}>
-    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} >
+    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} startIcon={<CancelIcon/>}>
   Cancel
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' onClick={addAsset}>
+    <Button variant="contained" fullWidth type='submit' onClick={addAsset} startIcon={<SaveIcon/>}>
   Save
 </Button>
     </Grid>
@@ -214,5 +237,6 @@ export default function ValidationTextFields() {
     </Grid>
     {/* </form> */}
     </Paper>
+    </>
   );
 }

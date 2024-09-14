@@ -18,8 +18,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/DoDisturbAlt';
 
 export default function EditAssetPage () {
+  const backLink = "http://localhost:5000";
     const location = useLocation();
     const { assetId } = location.state || {}; // Access assetId from state
     const [asset, setAsset] = React.useState(null);
@@ -31,7 +34,7 @@ export default function EditAssetPage () {
     const [description, setDescription] = React.useState('');
     const [inflight, setInflight] = React.useState('false');
     const [open, setOpen] = useState(false);
-  
+    
 
     const handleClick = () => {
         setOpen(true);
@@ -76,7 +79,7 @@ export default function EditAssetPage () {
         const fetchAsset = async () => {
             try {
                 const token = localStorage.getItem('token'); // Assuming you use token-based auth
-                const response = await axios.get(`${process.env.REACT_APP_BACK_LINK}/assets/asset/${assetId}`, {
+                const response = await axios.get(`${backLink}/assets/asset/${assetId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setAsset(response.data); // Store asset data 
@@ -101,7 +104,7 @@ export default function EditAssetPage () {
     
         try {
           const token = localStorage.getItem('token');
-          await axios.put(`${process.env.REACT_APP_BACK_LINK}/assets/asset/${assetId}`, asset, {
+          await axios.put(`${backLink}/assets/asset/${assetId}`, asset, {
             headers: { Authorization: `Bearer ${token}` },
           });
            // Show success Snackbar
@@ -213,12 +216,12 @@ export default function EditAssetPage () {
     </Grid>
 
     <Grid size={2}>
-    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} >
+    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} startIcon={<CancelIcon/>}>
   Cancel
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' onClick={editAsset}>
+    <Button variant="contained" fullWidth type='submit' onClick={editAsset} startIcon={<SaveIcon/>}>
   Save
 </Button>
     </Grid>

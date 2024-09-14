@@ -35,8 +35,8 @@ const style = {
 export default function DataTable() {
   const navigate = useNavigate();
 
-  const handleUpdateClick = (asset) => {
-    navigate('/edit-asset', { state: { assetId: asset._id } }); // Pass asset ID via state
+  const handleUpdateClick = (selectedCase) => {
+    navigate('/edit-case', { state: { caseId: selectedCase._id } }); // Pass case ID via state
 };
 
   // Custom Toolbar component
@@ -50,8 +50,8 @@ export default function DataTable() {
         />
         <Box sx={{ flexGrow: 1 }} />
         {/* Button to open modal */}
-        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-asset')} >
-          Add Asset
+        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-case')} >
+          Add Case
         </Button>
         <GridToolbarExport
           slotProps={{
@@ -106,7 +106,7 @@ export default function DataTable() {
         console.log("Back link : " + backLink);
         
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${backLink}/assets/all-assets`, {
+        const response = await axios.get(`${backLink}/cases/all-cases`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

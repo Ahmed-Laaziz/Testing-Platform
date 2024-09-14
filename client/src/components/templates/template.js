@@ -49,6 +49,12 @@ const NAVIGATION = [
         title: 'Cases',
         icon: <DescriptionIcon />,
       },
+      ,
+      {
+        segment: 'orders',
+        title: 'Orders',
+        icon: <DescriptionIcon />,
+      },
     ],
   },
   {

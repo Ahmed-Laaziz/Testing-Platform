@@ -2,6 +2,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/authentication/sign-in";
 import Home from "./pages/home/home";
+import AllCases from "./pages/all-cases/cases";
+import AllOrders from "./pages/all-orders/orders";
 import AddAsset from "./pages/add/asset";
 import EditAsset from "./pages/edit/asset";
 import DashboardLayoutBasic from './components/templates/template';
@@ -23,7 +25,8 @@ export default function App() {
         <Route path="datasets/assets" element={<Home/>} />
         <Route path="add-asset" element={<AddAsset/>} />
         <Route path="edit-asset" element={<EditAsset/>} />
-        <Route path="datasets/cases" element={<DashboardLayoutBasic component={() => <div>Cases Component</div>} />} />
+        <Route path="datasets/cases" element={<AllCases/>} />
+        <Route path="datasets/orders" element={<AllOrders/>} />
       </Routes>
     </BrowserRouter>
     </UserProvider>

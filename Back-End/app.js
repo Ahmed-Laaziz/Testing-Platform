@@ -7,6 +7,16 @@ const connectDB = require('./database/db');
 var authRouter = require('./routes/authentication/authenticationRouter');
 var userRouter = require('./routes/users/userRouter');
 var assetRouter = require('./routes/elements/assetRouter');
+var caseRouter = require('./routes/elements/caseRouter');
+var orderRouter = require('./routes/elements/orderRouter');
+
+// PERSONAS
+
+const processRoutes = require('./routes/personas/processRouter');
+const functionalityRoutes = require('./routes/personas/functionalityRoutes');
+const subFunctionalityRoutes = require('./routes/personas/subFunctionalityRoutes');
+const personaRoutes = require('./routes/personas/personaRoutes');
+
 const app = express();
 
 // Connect to the database when the app starts
@@ -30,6 +40,16 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/assets', assetRouter);
+app.use('/cases', caseRouter);
+app.use('/orders', orderRouter);
+
+// Personas Routes
+app.use('/processes', processRoutes);
+app.use('/functionalities', functionalityRoutes);
+app.use('/subFunctionalities', subFunctionalityRoutes);
+app.use('/personas', personaRoutes);
+
+
 // Define routes and middleware
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
