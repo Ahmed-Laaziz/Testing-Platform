@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const FunctionalitySchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   description: String,
   process: { type: mongoose.Schema.Types.ObjectId, ref: 'Process' },
   subFunctionalities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SubFunctionality' }]

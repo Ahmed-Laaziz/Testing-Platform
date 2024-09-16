@@ -90,7 +90,8 @@ export default function ValidationTextFields() {
       
     
 
-    const addAsset = async () => {
+    const addAsset = async (event) => {
+      event.preventDefault(); // Prevent default form submission behavior
         const token = localStorage.getItem('token');
         const type = await generateTypeField();
         console.log("this is the type value " + type);
@@ -135,7 +136,7 @@ export default function ValidationTextFields() {
     <Paper elevation={3} >
         <>&nbsp;</>
         <center><h3>&nbsp;Add New Asset</h3></center>
-        {/* <form onSubmit={addAsset}> */}
+        <form onSubmit={addAsset}>
         <Grid container spacing={2} sx={{padding:"2%"}}>
         <Grid size={6}>
       <TextField id="outlined-basic" label="Identifier" required variant="outlined" fullWidth value={identifier} onChange={handleChangeIdentifier}/>
@@ -229,13 +230,13 @@ export default function ValidationTextFields() {
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' onClick={addAsset} startIcon={<SaveIcon/>}>
+    <Button variant="contained" fullWidth type='submit' startIcon={<SaveIcon/>}>
   Save
 </Button>
     </Grid>
     
     </Grid>
-    {/* </form> */}
+    </form>
     </Paper>
     </>
   );

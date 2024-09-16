@@ -13,9 +13,9 @@ var orderRouter = require('./routes/elements/orderRouter');
 // PERSONAS
 
 const processRoutes = require('./routes/personas/processRouter');
-const functionalityRoutes = require('./routes/personas/functionalityRoutes');
-const subFunctionalityRoutes = require('./routes/personas/subFunctionalityRoutes');
-const personaRoutes = require('./routes/personas/personaRoutes');
+const functionalityRoutes = require('./routes/personas/functionalityRouter');
+const subFunctionalityRoutes = require('./routes/personas/subFunctionalityRouter');
+const personaRoutes = require('./routes/personas/personaRouter');
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors(
   {
     origin: ["http://localhost:3000"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
+    methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
     credentials: true
 }
 ));

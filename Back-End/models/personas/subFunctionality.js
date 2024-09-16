@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const SubFunctionalitySchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   release: String,
   reference: String,
   functionality: { type: mongoose.Schema.Types.ObjectId, ref: 'Functionality' },

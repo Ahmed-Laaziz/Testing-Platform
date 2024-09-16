@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const ProcessSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   description: String,
   functionalities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Functionality' }]
 });

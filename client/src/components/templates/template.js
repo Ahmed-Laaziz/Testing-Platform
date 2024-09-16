@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import hooks for navigation and location
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,58 +10,55 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { useNavigate } from 'react-router-dom'; // Import the navigation hook
-
+import CaseIcon from '@mui/icons-material/BusinessCenter';
+import AssetIcon from '@mui/icons-material/ProductionQuantityLimits';
+import PersonasIcon from '@mui/icons-material/SupervisorAccount';
+import AccessIcon from '@mui/icons-material/VpnKey';
+import FunctionalityIcon from '@mui/icons-material/ModeComment';
+import SubFunctionalityIcon from '@mui/icons-material/InsertComment';
+import ProcessIcon from '@mui/icons-material/AutoMode';
+import PermissionsIcon from '@mui/icons-material/NotInterested';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import GavelIcon from '@mui/icons-material/Gavel';
 const NAVIGATION = [
-  {
-    kind: 'header',
-    title: 'Main items',
-  },
-  {
-    segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
-  },
-  {
-    segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Analytics',
-  },
+  { kind: 'header', title: 'Main items' },
+  { segment: 'dashboard', title: 'Dashboard', icon: <DashboardIcon /> },
+  { segment: 'orders', title: 'Orders', icon: <ShoppingCartIcon /> },
+  { kind: 'divider' },
+  { kind: 'header', title: 'Datasets' },
   {
     segment: 'datasets',
-    title: 'Datasets',
+    title: 'All Datasets',
+    icon: <FolderOpenIcon />,
+    children: [
+      { segment: 'aggregated', title: 'Access', icon: <GavelIcon /> },
+    ],
+  },
+  { kind: 'divider' },
+  { kind: 'header', title: 'Data Management' },
+  {
+    segment: 'datasets',
+    title: 'Entities',
     icon: <BarChartIcon />,
     children: [
-      {
-        segment: 'assets',
-        title: 'Assets',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'cases',
-        title: 'Cases',
-        icon: <DescriptionIcon />,
-      },
-      ,
-      {
-        segment: 'orders',
-        title: 'Orders',
-        icon: <DescriptionIcon />,
-      },
+      { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
+      { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
+      { segment: 'orders', title: 'Orders', icon: <DescriptionIcon /> },
     ],
   },
   {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
+    segment: 'datasets',
+    title: 'Access / Authorization',
+    icon: <AccessIcon />,
+    children: [
+      { segment: 'personas', title: 'Personas', icon: <PersonasIcon /> },
+      { segment: 'processes', title: 'Processes', icon: <ProcessIcon /> },
+      { segment: 'functionalities', title: 'Functionalities', icon: <FunctionalityIcon /> },
+      { segment: 'subFunctionalities', title: 'SubFunctionalities', icon: <SubFunctionalityIcon /> },
+      { segment: 'permissions', title: 'Permissions', icon: <PermissionsIcon /> },
+    ],
   },
+  { segment: 'integrations', title: 'Integrations', icon: <LayersIcon /> },
 ];
 
 const demoTheme = createTheme({
@@ -81,9 +78,7 @@ const demoTheme = createTheme({
 });
 
 function Template({ pathname }) {
-  return (
-   <></>
-  );
+  return <></>;
 }
 
 Template.propTypes = {
@@ -91,13 +86,18 @@ Template.propTypes = {
 };
 
 function DashboardLayoutBasic({ window, component: CustomComponent }) {
-  const [pathname, setPathname] = React.useState('/dashboard');
-  const navigate = useNavigate();  // Use navigate to change URL
+  const location = useLocation(); // Track the current location
+  const [pathname, setPathname] = React.useState(location.pathname);
+  const navigate = useNavigate(); // Hook for programmatic navigation
+
+  React.useEffect(() => {
+    // Update pathname whenever the location changes
+    setPathname(location.pathname);
+  }, [location]);
 
   const handleNavigationClick = (segment) => {
     const newPath = `${segment}`;
-    setPathname(newPath);
-    navigate(newPath);  // Change the URL
+    navigate(newPath); // Navigate to the new path
   };
 
   const router = React.useMemo(() => {
