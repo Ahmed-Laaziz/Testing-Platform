@@ -5,6 +5,7 @@ const verifyToken = require('../../middlewares/verifyToken');
 
 router.get('/all-personas', verifyToken , personaController.getAllPersonas);
 router.post('/add-persona', verifyToken , personaController.createPersona);
+router.post('/add-personas', verifyToken , personaController.addMultiplePersonas);
 router.delete('/persona/:id', verifyToken , personaController.deletePersona);
 
 // Get a persona by ID

@@ -32,6 +32,17 @@ const createPersona = async (req, res) => {
   }
 };
 
+// Bulk insert function to add multiple personas at once
+const addMultiplePersonas = async (req, res) => {
+    try {
+      const personas = req.body; // The list of personas will be in req.body
+      await Persona.insertMany(personas); // Use Mongoose's insertMany to insert the list
+      res.status(201).json({ message: 'Personas added successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
 const updatePersonaById = async (req, res) => {
   try {
     const updatedPersona = await Persona.findByIdAndUpdate(
@@ -79,5 +90,6 @@ module.exports = {
   createPersona,
   deletePersona,
   getPersonaById,
-  updatePersonaById
+  updatePersonaById,
+  addMultiplePersonas
 };

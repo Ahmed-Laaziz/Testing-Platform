@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AuthImg from '../../images/authentication/img_auth.jpg';
+import AuthImg from '../../images/authentication/data_management2.gif';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../../authentication/tokenContext';
@@ -27,7 +27,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Ensaj
+        QA Automation
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -135,14 +135,14 @@ const [passwordError, setPasswordError] = useState('');
             }}
           >
             <Typography component="h1" variant="h5">
-              Gestion des Ressources Humaines
+              &nbsp;
             </Typography>
             <Grid>&nbsp;</Grid>
             <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Authentification
+              Login
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -179,12 +179,12 @@ const [passwordError, setPasswordError] = useState('');
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Authentification
+                Login
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="/retrieve" variant="body2">
-                    Mot de passe oublié?
+                    Forgotten your password?
                   </Link>
                 </Grid>
                 <Grid item>

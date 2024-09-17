@@ -8,7 +8,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 
-const backLink = process.env.REACT_APP_BACK_LINK;
+const backLink = "http://localhost:5000";
 
 const PermissionManager = () => {
   const [personas, setPersonas] = useState([]);
@@ -18,6 +18,9 @@ const PermissionManager = () => {
   const [permission, setPermission] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [initialPermission, setInitialPermission] = useState(null);
+
+  console.log("permissions bqck link : " + backLink);
+  
 
   // Fetch personas from the backend
   useEffect(() => {
@@ -118,14 +121,14 @@ const PermissionManager = () => {
           getOptionLabel={(option) => option.name}
           onChange={(event, newValue) => setSelectedPersona(newValue)}
           renderInput={(params) => <TextField {...params} label="Select Persona" />}
-          style={{ marginRight: '2%', width: '40%' }}
+          style={{ marginRight: '2%', width: '48%' }}
         />
         <Autocomplete
           options={subFunctionalities}
           getOptionLabel={(option) => option.name}
           onChange={(event, newValue) => setSelectedSubFunctionality(newValue)}
           renderInput={(params) => <TextField {...params} label="Select Sub-Functionality" />}
-          style={{ marginRight: '2%', width: '40%' }}
+          style={{ marginRight: '2%', width: '48%' }}
           disabled={!selectedPersona} // Disable if persona is not selected
         />
         {/* <Button
@@ -175,7 +178,7 @@ const PermissionManager = () => {
                 style={{ marginRight: '10px' }}
               >
                 <SaveIcon />
-                Save
+                &nbsp;Save
               </Button>
               <Button
                 variant="outlined"
@@ -184,7 +187,7 @@ const PermissionManager = () => {
                 disabled={!isEditing}
               >
                 <CancelIcon />
-                Cancel
+                &nbsp;Cancel
               </Button>
             </div>
           )}
