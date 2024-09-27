@@ -20,6 +20,7 @@ import AllSubFunctionalities from "./pages/all-subFunctionalities/subFunctionali
 import AddSubFunctionality from "./pages/add/subFunctionality";
 import EditSubFunctionality from "./pages/edit/subFunctionality";
 import AllAggregatedPersonas from "./pages/all-aggregated-personas/aggregated_personas";
+import AllStatuses from "./pages/all-aggregated-personas/statuses";
 import AddPermission from "./pages/add/permission"
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="edit-subFunctionality" element={<EditSubFunctionality/>} />
         <Route path="datasets/aggregated" element={<AllAggregatedPersonas/>} />
         <Route path="datasets/permissions" element={<AddPermission/>}/>
+        <Route path="datasets/statuses" element={<AllStatuses/>}/>
 
       </Routes>
     </BrowserRouter>

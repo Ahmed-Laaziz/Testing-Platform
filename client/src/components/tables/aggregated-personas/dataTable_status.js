@@ -6,25 +6,18 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarExport,
-  GridToolbarDensitySelector,
-} from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarDensitySelector } from '@mui/x-data-grid';
+import * as XLSX from 'xlsx';
 import ExcelJS from 'exceljs';  // Import ExcelJS
 import { saveAs } from 'file-saver';
 // API base URL
 const API_BASE_URL = 'http://localhost:5000';
 
-const PermissionTable = () => {
+const PermissionTableWithStatus = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  
   const [processes, setProcesses] = useState([]);
   const [functionalities, setFunctionalities] = useState([]);
   const [subFunctionalities, setSubFunctionalities] = useState([]);
@@ -37,25 +30,17 @@ const PermissionTable = () => {
       try {
         const token = localStorage.getItem('token');
         const processesResponse = await axios.get(`${API_BASE_URL}/processes/all-processes`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const functionalitiesResponse = await axios.get(`${API_BASE_URL}/functionalities/all-functionalities`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const subFunctionalitiesResponse = await axios.get(`${API_BASE_URL}/subfunctionalities/all-subfunctionalities`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const personasResponse = await axios.get(`${API_BASE_URL}/personas/all-personas`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setProcesses(processesResponse.data);
         setFunctionalities(functionalitiesResponse.data);
@@ -76,45 +61,31 @@ const PermissionTable = () => {
     return <Typography>Loading...</Typography>;
   }
 
-  // Custom Toolbar component
+  // Custom Toolbar component with Export button for Excel
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
-        <GridToolbarDensitySelector
-          slotProps={{ tooltip: { title: 'Change density' } }}
-        />
+        <GridToolbarDensitySelector slotProps={{ tooltip: { title: 'Change density' } }} />
         <Box sx={{ flexGrow: 1 }} />
-        {/* Button to open modal */}
-        {/* <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-persona')} >
-          Add Persona
-        </Button> */}
         <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={handleExportExcel}>
           Export as Excel
         </Button>
-        <GridToolbarExport
-          slotProps={{
-            tooltip: { title: 'Export data' },
-            button: { variant: 'outlined' },
-          }}
-        />
+        <GridToolbarExport slotProps={{ tooltip: { title: 'Export data' }, button: { variant: 'outlined' } }} />
       </GridToolbarContainer>
     );
   }
 
-  
-
-  // Prepare columns for DataGrid (dynamically include personas' permissions)
+  // Prepare columns for DataGrid (dynamically include personas' status)
   const columns = [
     { field: 'functionality', headerName: 'Functionality', width: 200 },
     { field: 'subFunctionality', headerName: 'Sub-Functionality', width: 200 },
-    // Add persona columns with Yes/No permissions dynamically
+    // Add persona columns with Status values dynamically
     ...personas.map((persona) => ({
       field: persona._id, // Persona column name
       headerName: persona.name,
       width: 150,
-    //   renderCell: (params) => (params.value ? 'Yes' : 'No'), // Render Yes/No for permission
     })),
   ];
 
@@ -131,44 +102,38 @@ const PermissionTable = () => {
       (subFunc) => subFunc.functionality === functionality._id
     );
 
-     // Handle no sub-functionalities (permissions set to 'N/A')
-     if (relatedSubFunctionalities.length === 0) {
-        return [
-          {
-            id: functionality._id, // Unique row ID
-            functionality: functionality.name,
-            subFunctionality: 'No Sub-Functionalities',
-            // Set permissions to 'N/A'
-            ...personas.reduce((acc, persona) => ({ ...acc, [persona._id]: 'N/A' }), {}),
-          },
-        ];
-      }
+    if (relatedSubFunctionalities.length === 0) {
+      return [
+        {
+          id: functionality._id,
+          functionality: functionality.name,
+          subFunctionality: 'No Sub-Functionalities',
+          ...personas.reduce((acc, persona) => ({ ...acc, [persona._id]: 'N/A' }), {}),
+        },
+      ];
+    }
 
-    // Handle sub-functionalities with or without permissions
     return relatedSubFunctionalities.map((subFunctionality) => {
-        const personaPermissions = personas.reduce((acc, persona) => {
-          // Find the permission for the persona on the current sub-functionality
-          const permission = (subFunctionality.permissions || []).find(
-            (perm) => perm.persona === persona._id
-          );
-          acc[persona._id] = permission
-            ? permission.hasPermission
-              ? 'Yes'
-              : 'No'
-            : 'No Permission Set'; // If no permission is set, show "No Permission Set"
-          return acc;
-        }, {});
+      const personaStatus = personas.reduce((acc, persona) => {
+        // Find the status for the persona on the current sub-functionality
+        const permission = (subFunctionality.permissions || []).find((perm) => perm.persona === persona._id);
+        acc[persona._id] = permission ? permission.status || 'No Status' : 'No Status'; // If no status is set, show "No Status"
+        return acc;
+      }, {});
 
       return {
-        id: subFunctionality._id, // Unique row ID
+        id: subFunctionality._id,
         functionality: functionality.name,
         subFunctionality: subFunctionality.name,
-        ...personaPermissions, // Spread permissions dynamically into the row
+        ...personaStatus,
       };
     });
   });
 
-  const handleExportExcel = async () => {
+  // Handle Export to Excel functionality
+  // Handle Export to Excel with conditional formatting
+   // Export to Excel with colors for OK/KO
+   const handleExportExcel = async () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Permissions Status');
 
@@ -183,17 +148,17 @@ const PermissionTable = () => {
       // Apply conditional formatting
       columns.forEach((col, colIndex) => {
         const cell = newRow.getCell(colIndex + 1); // Excel cells are 1-indexed
-        if (row[col.field] === 'Yes') {
+        if (row[col.field] === 'OK') {
           cell.fill = {
             type: 'pattern',
             pattern: 'solid',
-            fgColor: { argb: '5d6d7e' }, // Green for Yes
+            fgColor: { argb: '00FF00' }, // Green for Yes
           };
-        } else if (row[col.field] === 'No') {
+        } else if (row[col.field] === 'KO') {
           cell.fill = {
             type: 'pattern',
             pattern: 'solid',
-            fgColor: { argb: 'aab7b8' }, // Red for No
+            fgColor: { argb: 'FF0000' }, // Red for No
           };
         }
       });
@@ -201,27 +166,28 @@ const PermissionTable = () => {
 
     // Export file
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), 'persona_permissions.xlsx');
+    saveAs(new Blob([buffer]), 'permissions_status.xlsx');
   };
+
 
   return (
     <Box>
-      <div style={{ height: "100vh", width: '100%' }}>
-        <DataGrid 
-        rows={rows} 
-        columns={columns}
-        slots={{
-          toolbar: CustomToolbar,
-        }}
-        loading={loading}
-        pageSize={isSmallScreen ? 5 : 7}
-        rowsPerPageOptions={[5, 10]}
-        getRowId={(row) => row.subFunctionality + row.functionality}
-        sx={{ border: 0 }}
-         />
+      <div style={{ height: '100vh', width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          slots={{
+            toolbar: CustomToolbar,
+          }}
+          loading={loading}
+          pageSize={isSmallScreen ? 5 : 7}
+          rowsPerPageOptions={[5, 10]}
+          getRowId={(row) => row.subFunctionality + row.functionality}
+          sx={{ border: 0 }}
+        />
       </div>
     </Box>
   );
 };
 
-export default PermissionTable;
+export default PermissionTableWithStatus;

@@ -32,6 +32,7 @@ const NAVIGATION = [
     icon: <FolderOpenIcon />,
     children: [
       { segment: 'aggregated', title: 'Access', icon: <GavelIcon /> },
+      { segment: 'statuses', title: 'Permissions Status', icon: <GavelIcon /> },
     ],
   },
   { kind: 'divider' },

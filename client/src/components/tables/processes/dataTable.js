@@ -68,7 +68,7 @@ export default function DataTable() {
 
   const columns = [
     { field: 'name', headerName: 'Name', width: 130 },
-    { field: 'description', headerName: 'Description', width: 130 },
+   // { field: 'description', headerName: 'Description', width: 130 },
     {
       field: 'actions',
       headerName: 'Actions',
