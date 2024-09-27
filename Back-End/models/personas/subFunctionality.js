@@ -11,7 +11,10 @@ const SubFunctionalitySchema = new mongoose.Schema({
   functionality: { type: mongoose.Schema.Types.ObjectId, ref: 'Functionality' },
   permissions: [{
     persona: { type: mongoose.Schema.Types.ObjectId, ref: 'Persona' },
-    hasPermission: Boolean
+    hasPermission: Boolean,
+    status: {
+      type: String
+    }
   }]
 });
 

@@ -5,6 +5,7 @@ const verifyToken = require('../../middlewares/verifyToken');
 
 router.get('/all-processes', verifyToken , processController.getAllProcesses);
 router.post('/add-process', verifyToken , processController.createProcess);
+router.post('/add-processes', verifyToken , processController.createMultipleProcesses);
 router.delete('/process/:id', verifyToken , processController.deleteProcess);
 
 // Get a process by ID

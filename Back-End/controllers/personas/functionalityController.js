@@ -29,6 +29,49 @@ const createFunctionality = async (req, res) => {
   }
 };
 
+const createMultipleFunctionalities = async (req, res) => {
+  try {
+    const functionalities = req.body.functionalities;
+    const savedFunctionalities = [];
+
+    for (const functionalityData of functionalities) {
+      const { name, description, processName, subFunctionalities } = functionalityData;
+
+      // Find the process by name
+      const process = await Process.findOne({ name: processName });
+
+      if (!process) {
+        return res.status(404).json({ message: `Process with name "${processName}" not found.` });
+      }
+
+      // Create a new functionality
+      const newFunctionality = new Functionality({
+        name,
+        description,
+        process: process._id, // Associate with the process ID
+        subFunctionalities
+      });
+
+      // Save the functionality
+      const savedFunctionality = await newFunctionality.save();
+      savedFunctionalities.push(savedFunctionality);
+
+      // Now update the process to add the functionality
+      await Process.findByIdAndUpdate(
+        process._id, // Find the process by its ID
+        { $push: { functionalities: savedFunctionality._id } }, // Push the new functionality's ID to the array
+        { new: true, useFindAndModify: false } // Return the updated document
+      );
+    }
+
+    res.status(201).json(savedFunctionalities);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
 const deleteFunctionality = async (req, res) => {
   try {
     // Find the functionality by ID
@@ -66,5 +109,6 @@ module.exports = {
   getAllFunctionalities,
   createFunctionality,
   deleteFunctionality,
-  getFunctionalityById
+  getFunctionalityById,
+  createMultipleFunctionalities
 };

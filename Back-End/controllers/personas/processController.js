@@ -52,6 +52,21 @@ const createProcess = async (req, res) => {
   }
 };
 
+const createMultipleProcesses = async (req, res) => {
+  try {
+    // Array of process objects sent in the request body
+    const processes = req.body.processes;
+    
+    // Using insertMany to add multiple processes at once
+    const insertedProcesses = await Process.insertMany(processes);
+
+    res.status(201).json(insertedProcesses);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 const deleteProcess = async (req, res) => {
   try {
     // Find the process by ID
@@ -81,5 +96,6 @@ module.exports = {
   createProcess,
   deleteProcess,
   getProcessById,
-  updateProcessById
+  updateProcessById,
+  createMultipleProcesses
 };

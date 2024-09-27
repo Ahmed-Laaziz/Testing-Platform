@@ -5,6 +5,7 @@ const verifyToken = require('../../middlewares/verifyToken');
 
 router.get('/all-functionalities', verifyToken , functionalityController.getAllFunctionalities);
 router.post('/add-functionality', verifyToken , functionalityController.createFunctionality);
+router.post('/add-functionalities', verifyToken , functionalityController.createMultipleFunctionalities);
 router.delete('/functionality/:id', verifyToken , functionalityController.deleteFunctionality);
 router.get('/functionality/:id', verifyToken, functionalityController.getFunctionalityById);
 
