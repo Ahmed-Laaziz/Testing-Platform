@@ -8,7 +8,9 @@ import AddProcess from "./pages/add/process";
 import AllProcesses from "./pages/all-processes/processes";
 import AllPersonas from "./pages/all-personas/personas";
 import AddPersona from "./pages/add/persona";
+import AddCase from "./pages/add/case";
 import EditPersona from "./pages/edit/persona";
+import EditCase from "./pages/edit/case";
 import AllFunctionalities from "./pages/all-functionalities/functionalities";
 import AddFunctionality from "./pages/add/functionality";
 import EditFunctionality from "./pages/edit/functionality";
@@ -22,6 +24,11 @@ import EditSubFunctionality from "./pages/edit/subFunctionality";
 import AllAggregatedPersonas from "./pages/all-aggregated-personas/aggregated_personas";
 import AllStatuses from "./pages/all-aggregated-personas/statuses";
 import AddPermission from "./pages/add/permission"
+
+import AllCis from "./pages/all_cis/cis";
+import AddCi from "./pages/add/ci";
+import EditCi from "./pages/edit/ci";
+
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
 import { UserProvider } from './context/userContext';
@@ -39,9 +46,11 @@ export default function App() {
         <Route path="integrations" element={<DashboardLayoutBasic component={() => <div>Integrations Component</div>} />} />
         <Route path="datasets/assets" element={<Home/>} />
         <Route path="add-asset" element={<AddAsset/>} />
+        <Route path="add-case" element={<AddCase/>} />
         <Route path="add-persona" element={<AddPersona/>} />
         <Route path="edit-asset" element={<EditAsset/>} />
         <Route path="edit-persona" element={<EditPersona/>} />
+        <Route path="edit-case" element={<EditCase/>} />
         <Route path="edit-process" element={<EditProcess/>} />
         <Route path="datasets/cases" element={<AllCases/>} />
         <Route path="datasets/orders" element={<AllOrders/>} />
@@ -57,6 +66,9 @@ export default function App() {
         <Route path="datasets/aggregated" element={<AllAggregatedPersonas/>} />
         <Route path="datasets/permissions" element={<AddPermission/>}/>
         <Route path="datasets/statuses" element={<AllStatuses/>}/>
+        <Route path="add-ci" element={<AddCi/>} />
+        <Route path="edit-ci" element={<EditCi/>} />
+        <Route path="datasets/cis" element={<AllCis/>} />
 
       </Routes>
     </BrowserRouter>

@@ -35,8 +35,8 @@ const style = {
 export default function DataTable() {
   const navigate = useNavigate();
 
-  const handleUpdateClick = (selectedCase) => {
-    navigate('/edit-case', { state: { caseId: selectedCase._id } }); // Pass case ID via state
+  const handleUpdateClick = (ci) => {
+    navigate('/edit-ci', { state: { ciId: ci._id } }); // Pass ci ID via state
 };
 
   // Custom Toolbar component
@@ -50,8 +50,8 @@ export default function DataTable() {
         />
         <Box sx={{ flexGrow: 1 }} />
         {/* Button to open modal */}
-        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-case')} >
-          Add Case
+        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-ci')} >
+          Add Customer Interaction
         </Button>
         <GridToolbarExport
           slotProps={{
@@ -70,15 +70,10 @@ export default function DataTable() {
     { field: 'type', headerName: 'Type', width: 130 },
     { field: 'identifier', headerName: 'Identifier', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'typification', headerName: 'Typification', width: 130 },
-    { field: 'case_origin', headerName: 'Case Origin', width: 130 },
-    { field: 'relapse', headerName: 'Relapse', type: 'boolean', width: 130 },
-    { field: 'insistence', headerName: 'Insistence', type: 'boolean', width: 130 },
-    { field: 'description', headerName: 'Description', width: 130 },
+    { field: 'interaction_type', headerName: 'Interaction Type', width: 130 },
     { field: 'entry_door', headerName: 'Entry Door', width: 130 },
-    { field: 'channel', headerName: 'Channel', width: 130 },
-    { field: 'subChannel', headerName: 'Sub Channel', width: 130 },
     { field: 'created_by', headerName: 'Created By', width: 130 },
+    { field: 'description', headerName: 'Description', width: 130 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -111,7 +106,7 @@ export default function DataTable() {
         console.log("Back link : " + backLink);
         
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${backLink}/cases/all-cases`, {
+        const response = await axios.get(`${backLink}/cis/all-cis`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

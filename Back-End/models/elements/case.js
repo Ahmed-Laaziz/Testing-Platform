@@ -8,6 +8,10 @@ const caseSchema = new Schema({
         required: true,
         unique: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     identifier: {
         type: String,
         required: true
@@ -16,26 +20,42 @@ const caseSchema = new Schema({
         type: String,
         required: false
     },
-    status_reason: {
+    typification: {
         type: String,
         required: false
     },
-    brand: {
+    case_origin: {
         type: String,
         required: false
     },
-    inflight: {
+    entry_door: {
+        type: String,
+        required: false,
+    },
+    channel: {
+        type: String,
+        required: false
+    },
+    subChannel: {
+        type: String,
+        required: false
+    },
+    relapse: {
         type: Boolean,
         required: false,
         default: false 
     },
-    description: {
+    insistence: {
+        type: Boolean,
+        required: false,
+        default: false 
+    },
+    created_by: {
         type: String,
-        required: true
+        required: false
     },
     branch: {
-        type: String,
-        required: true
+        type: String
     }
 }
 , {timestamps: true})

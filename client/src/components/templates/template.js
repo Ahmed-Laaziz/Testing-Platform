@@ -44,7 +44,7 @@ const NAVIGATION = [
     children: [
       { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
       { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
-      { segment: 'orders', title: 'Orders', icon: <DescriptionIcon /> },
+      { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },
     ],
   },
   {
