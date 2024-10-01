@@ -4,7 +4,8 @@
   "description": "This is a testing platform ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js --port=5000",
+    "start-dev": "nodemon app.js --port=5000"
   },
   "author": "Ahmed Laaziz",
   "license": "ISC",
