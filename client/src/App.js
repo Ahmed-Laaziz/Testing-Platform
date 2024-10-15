@@ -29,6 +29,10 @@ import AllCis from "./pages/all_cis/cis";
 import AddCi from "./pages/add/ci";
 import EditCi from "./pages/edit/ci";
 
+import AllAccounts from "./pages/all-accounts/accounts";
+import AddAccount from "./pages/add/account";
+import EditAccount from "./pages/edit/account";
+
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
 import { UserProvider } from './context/userContext';
@@ -69,6 +73,9 @@ export default function App() {
         <Route path="add-ci" element={<AddCi/>} />
         <Route path="edit-ci" element={<EditCi/>} />
         <Route path="datasets/cis" element={<AllCis/>} />
+        <Route path="add-account" element={<AddAccount/>} />
+        <Route path="edit-account" element={<EditAccount/>} />
+        <Route path="datasets/accounts" element={<AllAccounts/>} />
 
       </Routes>
     </BrowserRouter>

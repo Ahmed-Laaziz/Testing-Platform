@@ -42,6 +42,7 @@ const NAVIGATION = [
     title: 'Entities',
     icon: <BarChartIcon />,
     children: [
+      { segment: 'accounts', title: 'Accounts', icon: <DescriptionIcon /> },
       { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
       { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
       { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },

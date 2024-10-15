@@ -153,6 +153,9 @@ export default function ValidationTextFields() {
         >
           <MenuItem value="Active">Active</MenuItem>
           <MenuItem value="Inactive">Inactive</MenuItem>
+          <MenuItem value="Total Suspension">Total Suspension</MenuItem>
+          <MenuItem value="Partial Suspension">Partial Suspension</MenuItem>
+          <MenuItem value="Terminate">Terminate</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -167,8 +170,40 @@ export default function ValidationTextFields() {
           label="Status Reason"
           onChange={handleChangeStatusReason}
         >
-          <MenuItem value="Staus Reason 1">Staus Reason 1</MenuItem>
-          <MenuItem value="Staus Reason 2">Status Reason 2</MenuItem>
+          <MenuItem value="Standard">Standard</MenuItem>
+          <MenuItem value="Portability">Portability</MenuItem>
+          <MenuItem value="Block">Block</MenuItem>
+          <MenuItem value="Reactivation">Reactivation</MenuItem>
+          <MenuItem value="Unblock">Unblock</MenuItem>
+          <MenuItem value="Change Ownership">Change Ownership</MenuItem>
+          <MenuItem value="Credit Control Request">Credit Control Request</MenuItem>
+          <MenuItem value="Change Billing Account">Change Billing Account</MenuItem>
+          <MenuItem value="Online">Online</MenuItem>
+          <MenuItem value="Paused">Paused</MenuItem>
+          <MenuItem value="Standby">Standby</MenuItem>
+          <MenuItem value="Offline">Offline</MenuItem>
+          <MenuItem value="Off">Off</MenuItem>
+          <MenuItem value="Not Ready">Not Ready</MenuItem>
+          <MenuItem value="Suspension by Customer Request">Suspension by Customer Request</MenuItem>
+          <MenuItem value="Fraud">Fraud</MenuItem>
+          <MenuItem value="Customer request">Customer request</MenuItem>
+          <MenuItem value="Dunning">Dunning</MenuItem>
+          <MenuItem value="Ausency/incapacity proven">Ausency/incapacity proven</MenuItem>
+          <MenuItem value="Customer Does Not Inform Reason">Customer Does Not Inform Reason</MenuItem>
+          <MenuItem value="Death">Death</MenuItem>
+          <MenuItem value="PPP Transfer - MIMO TPCR">PPP Transfer - MIMO TPCR</MenuItem>
+          <MenuItem value="Loss/Stolen">Loss/Stolen</MenuItem>
+          <MenuItem value="Proven Unemployment">Proven Unemployment</MenuItem>
+          <MenuItem value="Resolution by Contractual Alteration">Resolution by Contractual Alteration</MenuItem>
+          <MenuItem value="Free resolution Right">Free resolution Right</MenuItem>
+          <MenuItem value="No coverage">No coverage</MenuItem>
+          <MenuItem value="Social Internet Tariff - Eligibility loss">Social Internet Tariff - Eligibility loss</MenuItem>
+          <MenuItem value="Bankruptcy">Bankruptcy</MenuItem>
+          <MenuItem value="Corporate Client Manager's Request">Corporate Client Manager's Request</MenuItem>
+          <MenuItem value="Crushed/Smashed SIM Portability">Crushed/Smashed SIM Portability</MenuItem>
+          <MenuItem value="Insolvency/Dissolution/Liquidation">Insolvency/Dissolution/Liquidation</MenuItem>
+          <MenuItem value="Superior Approval">Superior Approval</MenuItem>
+          <MenuItem value="Transfer to other Product/Service MEO Mobile">Transfer to other Product/Service MEO Mobile</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -203,8 +238,7 @@ export default function ValidationTextFields() {
           label="Brand"
           onChange={handleBrand}
         >
-          <MenuItem value="Brand 1">Brand 1</MenuItem>
-          <MenuItem value="Brand 2">Brand 2</MenuItem>
+          <MenuItem value="UZO">UZO</MenuItem>
         </Select>
       </FormControl>
       </Grid>
