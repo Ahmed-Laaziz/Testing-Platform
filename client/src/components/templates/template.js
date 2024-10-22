@@ -20,6 +20,8 @@ import ProcessIcon from '@mui/icons-material/AutoMode';
 import PermissionsIcon from '@mui/icons-material/NotInterested';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import GavelIcon from '@mui/icons-material/Gavel';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import KeyOffIcon from '@mui/icons-material/KeyOff';
 const NAVIGATION = [
   { kind: 'header', title: 'Main items' },
   { segment: 'dashboard', title: 'Dashboard', icon: <DashboardIcon /> },
@@ -31,7 +33,7 @@ const NAVIGATION = [
     title: 'All Datasets',
     icon: <FolderOpenIcon />,
     children: [
-      { segment: 'aggregated', title: 'Access', icon: <GavelIcon /> },
+      { segment: 'aggregated', title: 'Access', icon: <KeyOffIcon /> },
       { segment: 'statuses', title: 'Permissions Status', icon: <GavelIcon /> },
     ],
   },
@@ -42,7 +44,7 @@ const NAVIGATION = [
     title: 'Entities',
     icon: <BarChartIcon />,
     children: [
-      { segment: 'accounts', title: 'Accounts', icon: <DescriptionIcon /> },
+      { segment: 'accounts', title: 'Accounts', icon: <GroupAddIcon /> },
       { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
       { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
       { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },

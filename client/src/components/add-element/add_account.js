@@ -23,6 +23,7 @@ const backLink = "http://localhost:5000";
 
 export default function ValidationTextFields() {
 
+
     const navigate = useNavigate(); 
     const [name, setName] = React.useState('')
     const [tariff, setTariff] = React.useState('');
@@ -32,6 +33,14 @@ export default function ValidationTextFields() {
     const [payment, setPayment] = React.useState('');
     const [location, setLocation] = React.useState('');
     const [open, setOpen] = React.useState(false);
+    const [selectedDate, setSelectedDate] = React.useState('');
+    const [nationality, setNationality] = React.useState('');
+    const [self_employed, setSelfEmployed] = React.useState('false');
+
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
     
     const handleClick = () => {
       setOpen(true);
@@ -65,6 +74,12 @@ export default function ValidationTextFields() {
     const handleChangeLocation = (event) => {        
         setLocation(event.target.value);
     }
+    const handleChangeNationality = (event) => {        
+      setNationality(event.target.value);
+  }
+    const handleSelfEmployed = (event) => {        
+      setSelfEmployed(event.target.value);
+  }
 
     const fetchAccountCount = async () => {
         const token = localStorage.getItem('token');
@@ -237,6 +252,83 @@ export default function ValidationTextFields() {
           <MenuItem value="Madeira">Madeira</MenuItem>
         </Select>
       </FormControl>
+      </Grid>
+      <Grid size={12}>
+      <h4>Subscription Data</h4>
+    </Grid>
+      
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Full Name" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Preferred Name" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Preferred Name" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+      <Grid size={4}>
+      <div>
+      <label htmlFor="date-input">Birth Date: </label>
+      <input
+        type="date"
+        id="date-input"
+        value={selectedDate}
+        onChange={handleDateChange}
+      />
+    </div>
+</Grid>
+    <Grid size={4}>
+      <TextField id="outlined-basic" label="Email" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+
+    
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Country Code" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Mobile Number" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
+      </Grid>
+
+      <Grid size={2}>
+      <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Self Employed</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        defaultValue="false"
+        value={self_employed}
+        onChange={handleSelfEmployed}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Yes" />
+        <FormControlLabel value="false" control={<Radio />} label="No"/>
+      </RadioGroup>
+    </FormControl>
+</Grid>
+<Grid size={12}>
+      <h4>Documentation</h4>
+    </Grid>
+
+    <Grid size={3}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Nationality</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={nationality}
+          label="Nationality"
+          onChange={handleChangeNationality}
+        >
+          <MenuItem value="Portugal">Portugal</MenuItem>
+        </Select>
+      </FormControl>
+      </Grid>
+
+      <Grid size={4}>
+      <TextField id="outlined-basic" label="Postal Code" required variant="outlined" fullWidth value={name} onChange={handleChangeName}/>
       </Grid>
 
       <Grid size={8}>
