@@ -32,8 +32,6 @@ const accountSchema = new Schema({
         type: String,
         required: false,
     },
-
-
     client_type: {
         type: String,
         required: false,
@@ -51,7 +49,7 @@ const accountSchema = new Schema({
         required: false,
     },
     birth_date: {
-        type: String,
+        type: Date,
         required: false,
     },
     email: {
@@ -130,6 +128,34 @@ const accountSchema = new Schema({
     type: String,
     required: false,
     },
+    nif: {
+        type: String,
+        required: false,
+        },
+    personal_docment_type: {
+        type: String,
+        required: false,
+        },
+    personal_docment_number: {
+        type: String,
+        required: false,
+        },
+    personal_document_due_date: {
+        type: Date,
+        required: false,
+        },
+    contract_delivery_method: {
+        type: String,
+        required: false,
+        },
+    country: {
+        type: String,
+        required: false,
+        },
+    fiscal_country: {
+        type: String,
+        required: false,
+        },
     
 }
 , {timestamps: true})

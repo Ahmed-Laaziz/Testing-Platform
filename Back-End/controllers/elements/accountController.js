@@ -12,6 +12,24 @@ exports.createAccount = async (req, res) => {
     }
 };
 
+// Function to add multiple accounts at once
+exports.addMultipleAccounts = async (req, res) => {
+    try {
+        const accounts = req.body.accounts; // Assume the request body contains an array of account objects
+        if (!Array.isArray(accounts) || accounts.length === 0) {
+            return res.status(400).json({ message: 'Please provide a valid array of accounts.' });
+        }
+
+        // Insert all accounts at once using insertMany
+        const result = await Account.insertMany(accounts);
+
+        res.status(201).json({ message: 'Accounts added successfully', data: result });
+    } catch (error) {
+        console.error('Error adding multiple accounts:', error);
+        res.status(500).json({ message: 'Failed to add accounts', error: error.message });
+    }
+};
+
 // Get all accounts (GET /accounts)
 exports.getAllAccounts = async (req, res) => {
     try {
@@ -73,5 +91,16 @@ exports.getAccountCount = async (req, res) => {
     } catch (error) {
         console.error('Error retrieving account count:', error);
         res.status(500).json({ error: 'Failed to retrieve account count' });
+    }
+};
+
+// Function to delete all accounts
+exports.deleteAllAccounts = async (req, res) => {
+    try {
+        const result = await Account.deleteMany({}); // Delete all documents in the collection
+        res.status(200).json({ message: 'All accounts have been deleted', deletedCount: result.deletedCount });
+    } catch (error) {
+        console.error('Error deleting all accounts:', error);
+        res.status(500).json({ message: 'Failed to delete accounts', error: error.message });
     }
 };
