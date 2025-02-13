@@ -22,10 +22,15 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import GavelIcon from '@mui/icons-material/Gavel';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import KeyOffIcon from '@mui/icons-material/KeyOff';
+
+
+
+//const user = JSON.parse(localStorage.getItem('user') || '{}'); 
+//const userEnv = user.environment || 'UNKNOWN'; 
+
 const NAVIGATION = [
   { kind: 'header', title: 'Main items' },
   { segment: 'dashboard', title: 'Dashboard', icon: <DashboardIcon /> },
-  { segment: 'orders', title: 'Orders', icon: <ShoppingCartIcon /> },
   { kind: 'divider' },
   { kind: 'header', title: 'Datasets' },
   {
@@ -45,9 +50,11 @@ const NAVIGATION = [
     icon: <BarChartIcon />,
     children: [
       { segment: 'accounts', title: 'Accounts', icon: <GroupAddIcon /> },
+      { segment: 'orders', title: 'Orders', icon: <ShoppingCartIcon /> },
       { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
       { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
       { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },
+      { segment: 'consumers', title: 'Consumers', icon: <GroupAddIcon /> },
     ],
   },
   {
@@ -64,6 +71,10 @@ const NAVIGATION = [
   },
   { segment: 'integrations', title: 'Integrations', icon: <LayersIcon /> },
 ];
+
+
+
+
 
 const demoTheme = createTheme({
   cssVariables: {
@@ -93,11 +104,36 @@ function DashboardLayoutBasic({ window, component: CustomComponent }) {
   const location = useLocation(); // Track the current location
   const [pathname, setPathname] = React.useState(location.pathname);
   const navigate = useNavigate(); // Hook for programmatic navigation
+  const [userEnv, setUserEnv] = React.useState(null); // Initialize as null
 
   React.useEffect(() => {
     // Update pathname whenever the location changes
     setPathname(location.pathname);
   }, [location]);
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('userEnv');
+    if (storedUser) {
+      //const parsedUser = JSON.parse(storedUser);
+      setUserEnv(storedUser || null);
+    }
+  }, []);
+
+  const FILTERED_NAVIGATION = NAVIGATION.filter((item) => {
+    if (userEnv === 'SIT') {
+      return true; // Affiche tout pour SIT
+    }
+  
+    if (userEnv === 'DEV') {
+      return (
+        item.segment === 'dashboard' || // Conserver le Dashboard
+        (item.title === 'Data Management' || // Conserver l'en-tête Data Management
+        (item.segment === 'datasets' && item.title === 'Entities')) // Conserver Entities
+      );
+    }
+  
+    return false; // Par défaut, ne rien afficher si l'environnement est inconnu
+  });
 
   const handleNavigationClick = (segment) => {
     const newPath = `${segment}`;
@@ -114,9 +150,13 @@ function DashboardLayoutBasic({ window, component: CustomComponent }) {
 
   const demoWindow = window !== undefined ? window() : undefined;
 
+  if (userEnv === null) {
+    return null; // Display nothing until userEnv is set
+}
+else 
   return (
     <AppProvider
-      navigation={NAVIGATION}
+      navigation={FILTERED_NAVIGATION}
       router={router}
       theme={demoTheme}
       window={demoWindow}

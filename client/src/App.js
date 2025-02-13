@@ -2,8 +2,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/authentication/sign-in";
 import Home from "./pages/home/home";
+import Dashboard from "./pages/dashboard/dashboard";
 import AllCases from "./pages/all-cases/cases";
-import AllOrders from "./pages/all-orders/orders";
 import AddProcess from "./pages/add/process";
 import AllProcesses from "./pages/all-processes/processes";
 import AllPersonas from "./pages/all-personas/personas";
@@ -33,6 +33,14 @@ import AllAccounts from "./pages/all-accounts/accounts";
 import AddAccount from "./pages/add/account";
 import EditAccount from "./pages/edit/account";
 
+import AllAconsumers from "./pages/all-consumers/consumers";
+import AddConsumer from "./pages/add/consumer";
+import EditConsumer from "./pages/edit/consumer";
+
+import AllOrders from "./pages/all-orders/orders";
+import AddOrder from "./pages/add/order";
+import EditOrder from "./pages/edit/order";
+
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
 import { UserProvider } from './context/userContext';
@@ -46,7 +54,7 @@ export default function App() {
         <Route path="/" element={<Login />}/>
         <Route path="home" element={<DashboardLayoutBasic component={() => <div>Home Component</div>} />} />
         <Route path="orders" element={<DashboardLayoutBasic component={() => <div>Orders Component</div>} />} />
-        <Route path="dashboard" element={<DashboardLayoutBasic component={() => <div>Dashborad Component</div>} />} />
+        <Route path="dashboard" element={<Dashboard/>} />
         <Route path="integrations" element={<DashboardLayoutBasic component={() => <div>Integrations Component</div>} />} />
         <Route path="datasets/assets" element={<Home/>} />
         <Route path="add-asset" element={<AddAsset/>} />
@@ -76,6 +84,12 @@ export default function App() {
         <Route path="add-account" element={<AddAccount/>} />
         <Route path="edit-account" element={<EditAccount/>} />
         <Route path="datasets/accounts" element={<AllAccounts/>} />
+        <Route path="add-consumer" element={<AddConsumer/>} />
+        <Route path="edit-consumer" element={<EditConsumer/>} />
+        <Route path="datasets/consumers" element={<AllAconsumers/>} />
+        <Route path="add-order" element={<AddOrder/>} />
+        <Route path="edit-order" element={<EditOrder/>} />
+        <Route path="datasets/orders" element={<AllOrders/>} />
 
       </Routes>
     </BrowserRouter>

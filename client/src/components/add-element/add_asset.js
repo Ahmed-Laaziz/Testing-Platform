@@ -31,7 +31,20 @@ export default function ValidationTextFields() {
     const [description, setDescription] = React.useState('');
     const [inflight, setInflight] = React.useState('false');
     const [open, setOpen] = React.useState(false);
-    
+    const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
+  
+        if (!userEnv) {
+          console.warn("User environment (userEnv) is not set.");
+          return;
+        }
+  
+        // Define the branch based on userEnv
+        let branch;
+        if (userEnv === "DEV") {
+          branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
+        } else {
+          branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
+        }
     const handleClick = () => {
       setOpen(true);
     };
@@ -65,7 +78,7 @@ export default function ValidationTextFields() {
     const fetchAssetCount = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get(`${backLink}/assets/count-assets` ,{
+            const response = await axios.get(`${backLink}/assets/count-assets/${branch}` ,{
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -87,12 +100,15 @@ export default function ValidationTextFields() {
           return null; // Return null or handle errors as needed
         }
       };
+
+
       
     
 
     const addAsset = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
         const token = localStorage.getItem('token');
+        
         const type = await generateTypeField();
         console.log("this is the type value " + type);
         try {
@@ -105,7 +121,7 @@ export default function ValidationTextFields() {
             brand: brand,
             inflight: inflight,
             description: description,
-            branch: "Draft_tests_branch"
+            branch: branch
           };
       
           // Make a POST request to your backend API

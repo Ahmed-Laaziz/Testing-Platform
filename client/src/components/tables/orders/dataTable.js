@@ -70,9 +70,8 @@ export default function DataTable() {
     { field: 'type', headerName: 'Type', width: 130 },
     { field: 'identifier', headerName: 'Identifier', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'status_reason', headerName: 'Status Reason', width: 130 },
-    { field: 'brand', headerName: 'Brand', width: 130 },
-    { field: 'inflight', headerName: 'Inflight', type: 'boolean', width: 130 },
+    { field: 'fulfillment_status', headerName: 'Status Reason', width: 130 },
+    { field: 'owner', headerName: 'Brand', width: 130 },
     { field: 'description', headerName: 'Description', width: 130 },
     {
       field: 'actions',
@@ -103,10 +102,24 @@ export default function DataTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Back link : " + backLink);
-        
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${backLink}/orders/all-orders`, {
+        const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
+  
+        if (!userEnv) {
+          console.warn("User environment (userEnv) is not set.");
+          return;
+        }
+  
+        // Define the branch based on userEnv
+        let branch;
+        if (userEnv === "DEV") {
+          branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
+        } else {
+          branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
+        }
+  
+        console.log("Fetching cis for branch:", branch);
+        const response = await axios.get(`${backLink}/orders/ordersByBranch/${branch}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

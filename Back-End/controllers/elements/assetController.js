@@ -37,6 +37,22 @@ exports.getAssetById = async (req, res) => {
     }
 };
 
+exports.getAssetsByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params;
+        const assets = await Asset.find({ branch });
+
+        if (assets.length === 0) {
+            return res.status(404).json({ error: 'No assets found for this branch' });
+        }
+
+        res.status(200).json(assets);
+    } catch (error) {
+        console.error('Error retrieving assets by branch:', error);
+        res.status(500).json({ error: 'Failed to retrieve assets by branch' });
+    }
+};
+
 // Update asset by ID (PUT /assets/:id)
 exports.updateAsset = async (req, res) => {
     try {
@@ -75,3 +91,21 @@ exports.getAssetCount = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve asset count' });
     }
 };
+
+// Get count of assets by branch (GET /assets/count/:branch)
+exports.getAssetCountByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params; // Extract branch from URL params
+
+        if (!branch) {
+            return res.status(400).json({ error: "Branch parameter is required" });
+        }
+
+        const assetCount = await Asset.countDocuments({ branch }); // Count assets for the given branch
+        res.status(200).json({ branch, count: assetCount });
+    } catch (error) {
+        console.error('Error retrieving asset count by branch:', error);
+        res.status(500).json({ error: 'Failed to retrieve asset count' });
+    }
+};
+

@@ -12,8 +12,13 @@ router.get('/all-orders', verifyToken, orderController.getAllOrders);
 // Get an order by ID
 router.get('/order/:id', verifyToken, orderController.getOrderById);
 
+// Get an ci by Branch
+router.get('/ordersByBranch/:id', verifyToken, orderController.getOrdersByBranch);
+
 // Get Orders Count
 router.get('/count-orders', verifyToken, orderController.getOrderCount);
+
+router.get('/count-orders/:branch', orderController.getOrderCountByBranch);
 // Update an order by ID
 router.put('/order/:id', verifyToken, orderController.updateOrder);
 

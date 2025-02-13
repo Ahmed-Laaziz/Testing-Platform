@@ -35,8 +35,8 @@ const style = {
 export default function DataTable() {
   const navigate = useNavigate();
 
-  const handleUpdateClick = (asset) => {
-    navigate('/edit-asset', { state: { assetId: asset._id } }); // Pass asset ID via state
+  const handleUpdateClick = (consumer) => {
+    navigate('/edit-consumer', { state: { consumerId: consumer._id } }); // Pass consumer ID via state
 };
 
   // Custom Toolbar component
@@ -50,8 +50,8 @@ export default function DataTable() {
         />
         <Box sx={{ flexGrow: 1 }} />
         {/* Button to open modal */}
-        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-asset')} >
-          Add Asset
+        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-consumer')} >
+          Add Consumer
         </Button>
         <GridToolbarExport
           slotProps={{
@@ -68,11 +68,10 @@ export default function DataTable() {
 
   const columns = [
     { field: 'type', headerName: 'Type', width: 130 },
-    { field: 'identifier', headerName: 'Identifier', width: 130 },
+    { field: 'nic', headerName: 'NIC', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
     { field: 'status_reason', headerName: 'Status Reason', width: 130 },
     { field: 'brand', headerName: 'Brand', width: 130 },
-    { field: 'inflight', headerName: 'Inflight', type: 'boolean', width: 130 },
     { field: 'description', headerName: 'Description', width: 130 },
     {
       field: 'actions',
@@ -103,7 +102,6 @@ export default function DataTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         const token = localStorage.getItem('token');
         const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
   
@@ -120,22 +118,19 @@ export default function DataTable() {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
   
-        console.log("Fetching assets for branch:", branch);
-  
-        const response = await axios.get(`${backLink}/assets/assetsByBranch/${branch}`, {
+        console.log("Fetching consumers for branch:", branch);
+        const response = await axios.get(`${backLink}/consumers/consumersByBranch/${branch}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-  
         setRows(response.data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
         setLoading(false);
       }
     };
-  
     fetchData();
   }, []);
 

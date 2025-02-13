@@ -21,15 +21,16 @@ import Alert from '@mui/material/Alert';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/DoDisturbAlt';
 
-export default function EditAssetPage () {
+export default function EditOrderPage () {
   const backLink = "http://localhost:5000";
     const location = useLocation();
-    const { assetId } = location.state || {}; // Access assetId from state
-    const [asset, setAsset] = React.useState(null);
+    const { orderId } = location.state || {}; // Access orderId from state
+    const [order, setOrder] = React.useState(null);
     const navigate = useNavigate(); 
     const [identifier, setIdentifier] = React.useState('')
     const [status, setStatus] = React.useState('');
     const [statusReason, setStatusReason] = React.useState('');
+    const [fulfillmentStatus, setFulfillmentStatus] = React.useState('');
     const [brand, setBrand] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [inflight, setInflight] = React.useState('false');
@@ -49,69 +50,73 @@ export default function EditAssetPage () {
 
     const handleChangeIdentifier = (event) => {
         setIdentifier(event.target.value);
-        asset.identifier = event.target.value;
+        order.identifier = event.target.value;
     }
     const handleChangeStatus = (event) => {
       setStatus(event.target.value);
-      asset.status = event.target.value;
+      order.status = event.target.value;
     };
     const handleChangeStatusReason = (event) => {
         setStatusReason(event.target.value);
-        asset.status_reason = event.target.value;
+        order.status_reason = event.target.value;
+      };
+      const handleChangeFulfillmentStatus = (event) => {
+        setFulfillmentStatus(event.target.value);
+        order.fulfillmentStatus(event.target.fulfillmentStatus)
       };
     const handleBrand = (event) => {
         setBrand(event.target.value)
-        asset.brand = event.target.value;
+        order.brand = event.target.value;
     }
     const handleChangeDescription = (event) => {
         setDescription(event.target.value);
-        asset.description = event.target.value;
+        order.description = event.target.value;
     }
     const handleInflightChange = (event) => {        
         setInflight(event.target.value);
-        asset.inflight = event.target.value;
+        order.inflight = event.target.value;
     }
 
-    console.log("Asset ID:", assetId);
+    console.log("Order ID:", orderId);
 
 
     React.useEffect(() => {
-        const fetchAsset = async () => {
+        const fetchOrder = async () => {
             try {
                 const token = localStorage.getItem('token'); // Assuming you use token-based auth
-                const response = await axios.get(`${backLink}/assets/asset/${assetId}`, {
+                const response = await axios.get(`${backLink}/orders/order/${orderId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setAsset(response.data); // Store asset data 
+                setOrder(response.data); // Store order data 
                 
             } catch (err) {
-                console.error('Error fetching asset:', err);
+                console.error('Error fetching order:', err);
                 
             }
         };
 
-        fetchAsset();
-    }, [assetId]);
+        fetchOrder();
+    }, [orderId]);
 
     React.useEffect(() => {
-        if (asset) {
-          setInflight(asset.inflight ? "true" : "false"); // Set inflight state based on asset value
+        if (order) {
+          setInflight(order.inflight ? "true" : "false"); // Set inflight state based on order value
         }
-      }, [asset])
+      }, [order])
 
-    const editAsset = async (event) => {
+    const editOrder = async (event) => {
         event.preventDefault(); // Prevent default form submission
     
         try {
           const token = localStorage.getItem('token');
-          await axios.put(`${backLink}/assets/asset/${assetId}`, asset, {
+          await axios.put(`${backLink}/orders/order/${orderId}`, order, {
             headers: { Authorization: `Bearer ${token}` },
           });
            // Show success Snackbar
             handleClick();
-          setTimeout(() => navigate('/datasets/assets'), 2000); // Redirect after 2 seconds
+          setTimeout(() => navigate('/datasets/orders'), 2000); // Redirect after 2 seconds
         } catch (err) {
-          console.error('Error updating asset:', err);
+          console.error('Error updating order:', err);
         }
       };
 
@@ -120,18 +125,18 @@ export default function EditAssetPage () {
         {/* Snackbar for success message */}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-        Asset updated successfully!
+        Order updated successfully!
       </Alert>
     </Snackbar>
         
         <Paper elevation={3} >
         <>&nbsp;</>
-        <center><h3>&nbsp;Edit Asset</h3></center>
-        {asset && (
+        <center><h3>&nbsp;Edit Order</h3></center>
+        {order && (
         
         <Grid container spacing={2} sx={{padding:"2%"}}>
         <Grid size={6}>
-      <TextField id="outlined-basic" label="Identifier" required variant="outlined" fullWidth value={identifier || asset?.identifier || ''} onChange={handleChangeIdentifier}/>
+      <TextField id="outlined-basic" label="Identifier" required variant="outlined" fullWidth value={identifier || order?.identifier || ''} onChange={handleChangeIdentifier}/>
       </Grid>
       <Grid size={6}>
       <FormControl fullWidth>
@@ -139,7 +144,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={status || asset?.status || ''}
+          value={status || order?.status || ''}
           label="Status"
           onChange={handleChangeStatus}
         >
@@ -158,7 +163,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={statusReason || asset?.status_reason || ''}
+          value={statusReason || order?.status_reason || ''}
           label="Status Reason"
           onChange={handleChangeStatusReason}
         >
@@ -225,7 +230,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={brand || asset?.brand || ''}
+          value={brand || order?.brand || ''}
           label="Brand"
           onChange={handleBrand}
         >
@@ -236,10 +241,10 @@ export default function EditAssetPage () {
       <Grid size={12}>
       <TextField
       fullWidth
-            placeholder="Write a brief description about the created asset..."
+            placeholder="Write a brief description about the created order..."
             multiline
             rows={5}
-            value={description || asset?.description || ''}
+            value={description || order?.description || ''}
             onChange={handleChangeDescription}
             required
             />
@@ -250,12 +255,12 @@ export default function EditAssetPage () {
     </Grid>
 
     <Grid size={2}>
-    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} startIcon={<CancelIcon/>}>
+    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/orders')} startIcon={<CancelIcon/>}>
   Cancel
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' onClick={editAsset} startIcon={<SaveIcon/>}>
+    <Button variant="contained" fullWidth type='submit' onClick={editOrder} startIcon={<SaveIcon/>}>
   Save
 </Button>
     </Grid>

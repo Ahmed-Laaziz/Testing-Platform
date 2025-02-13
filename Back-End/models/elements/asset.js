@@ -6,7 +6,6 @@ const assetSchema = new Schema({
     type: {
         type: String,
         required: true,
-        unique: true
     },
     identifier: {
         type: String,

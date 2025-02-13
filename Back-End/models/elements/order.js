@@ -6,7 +6,7 @@ const orderSchema = new Schema({
     type: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     identifier: {
         type: String,
@@ -16,18 +16,17 @@ const orderSchema = new Schema({
         type: String,
         required: false
     },
+    fulfillment_status: {
+        type: String,
+        required: false
+    },
     status_reason: {
         type: String,
         required: false
     },
-    brand: {
+    owner: {
         type: String,
         required: false
-    },
-    inflight: {
-        type: Boolean,
-        required: false,
-        default: false 
     },
     description: {
         type: String,

@@ -37,6 +37,22 @@ exports.getOrderById = async (req, res) => {
     }
 };
 
+exports.getOrdersByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params;
+        const orders = await Order.find({ branch });
+
+        if (orders.length === 0) {
+            return res.status(404).json({ error: 'No orders found for this branch' });
+        }
+
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error retrieving orders by branch:', error);
+        res.status(500).json({ error: 'Failed to retrieve orders by branch' });
+    }
+};
+
 // Update order by ID (PUT /orders/:id)
 exports.updateOrder = async (req, res) => {
     try {
@@ -72,6 +88,23 @@ exports.getOrderCount = async (req, res) => {
         res.status(200).json({ count: orderCount });
     } catch (error) {
         console.error('Error retrieving order count:', error);
+        res.status(500).json({ error: 'Failed to retrieve order count' });
+    }
+};
+
+// Get count of orders by branch (GET /orders/count/:branch)
+exports.getOrderCountByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params; // Extract branch from URL params
+
+        if (!branch) {
+            return res.status(400).json({ error: "Branch parameter is required" });
+        }
+
+        const orderCount = await Order.countDocuments({ branch }); // Count orders for the given branch
+        res.status(200).json({ branch, count: orderCount });
+    } catch (error) {
+        console.error('Error retrieving order count by branch:', error);
         res.status(500).json({ error: 'Failed to retrieve order count' });
     }
 };

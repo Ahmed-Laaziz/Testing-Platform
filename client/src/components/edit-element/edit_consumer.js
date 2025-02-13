@@ -21,18 +21,17 @@ import Alert from '@mui/material/Alert';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/DoDisturbAlt';
 
-export default function EditAssetPage () {
+export default function EditConsumerPage () {
   const backLink = "http://localhost:5000";
     const location = useLocation();
-    const { assetId } = location.state || {}; // Access assetId from state
-    const [asset, setAsset] = React.useState(null);
+    const { consumerId } = location.state || {}; // Access consumerId from state
+    const [consumer, setConsumer] = React.useState(null);
     const navigate = useNavigate(); 
-    const [identifier, setIdentifier] = React.useState('')
+    const [nic, setNic] = React.useState('')
     const [status, setStatus] = React.useState('');
     const [statusReason, setStatusReason] = React.useState('');
     const [brand, setBrand] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [inflight, setInflight] = React.useState('false');
     const [open, setOpen] = useState(false);
     
 
@@ -47,71 +46,62 @@ export default function EditAssetPage () {
         setOpen(false);
     };
 
-    const handleChangeIdentifier = (event) => {
-        setIdentifier(event.target.value);
-        asset.identifier = event.target.value;
+    const handleChangeNic = (event) => {
+        setNic(event.target.value);
+        consumer.nic = event.target.value;
     }
     const handleChangeStatus = (event) => {
       setStatus(event.target.value);
-      asset.status = event.target.value;
+      consumer.status = event.target.value;
     };
     const handleChangeStatusReason = (event) => {
         setStatusReason(event.target.value);
-        asset.status_reason = event.target.value;
+        consumer.status_reason = event.target.value;
       };
     const handleBrand = (event) => {
         setBrand(event.target.value)
-        asset.brand = event.target.value;
+        consumer.brand = event.target.value;
     }
     const handleChangeDescription = (event) => {
         setDescription(event.target.value);
-        asset.description = event.target.value;
-    }
-    const handleInflightChange = (event) => {        
-        setInflight(event.target.value);
-        asset.inflight = event.target.value;
+        consumer.description = event.target.value;
     }
 
-    console.log("Asset ID:", assetId);
+    console.log("Consumer ID:", consumerId);
 
 
     React.useEffect(() => {
-        const fetchAsset = async () => {
+        const fetchConsumer = async () => {
             try {
                 const token = localStorage.getItem('token'); // Assuming you use token-based auth
-                const response = await axios.get(`${backLink}/assets/asset/${assetId}`, {
+                const response = await axios.get(`${backLink}/consumers/consumer/${consumerId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setAsset(response.data); // Store asset data 
+                setConsumer(response.data); // Store consumer data 
                 
             } catch (err) {
-                console.error('Error fetching asset:', err);
+                console.error('Error fetching consumer:', err);
                 
             }
         };
 
-        fetchAsset();
-    }, [assetId]);
+        fetchConsumer();
+    }, [consumerId]);
 
-    React.useEffect(() => {
-        if (asset) {
-          setInflight(asset.inflight ? "true" : "false"); // Set inflight state based on asset value
-        }
-      }, [asset])
 
-    const editAsset = async (event) => {
+    const editConsumer = async (event) => {
         event.preventDefault(); // Prevent default form submission
     
         try {
           const token = localStorage.getItem('token');
-          await axios.put(`${backLink}/assets/asset/${assetId}`, asset, {
+          await axios.put(`${backLink}/consumers/consumer/${consumerId}`, consumer, {
             headers: { Authorization: `Bearer ${token}` },
           });
            // Show success Snackbar
             handleClick();
-          setTimeout(() => navigate('/datasets/assets'), 2000); // Redirect after 2 seconds
+          setTimeout(() => navigate('/datasets/consumers'), 2000); // Redirect after 2 seconds
         } catch (err) {
-          console.error('Error updating asset:', err);
+          console.error('Error updating consumer:', err);
         }
       };
 
@@ -120,18 +110,18 @@ export default function EditAssetPage () {
         {/* Snackbar for success message */}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-        Asset updated successfully!
+        Consumer updated successfully!
       </Alert>
     </Snackbar>
         
         <Paper elevation={3} >
         <>&nbsp;</>
-        <center><h3>&nbsp;Edit Asset</h3></center>
-        {asset && (
+        <center><h3>&nbsp;Edit Consumer</h3></center>
+        {consumer && (
         
         <Grid container spacing={2} sx={{padding:"2%"}}>
         <Grid size={6}>
-      <TextField id="outlined-basic" label="Identifier" required variant="outlined" fullWidth value={identifier || asset?.identifier || ''} onChange={handleChangeIdentifier}/>
+      <TextField id="outlined-basic" label="Nic" required variant="outlined" fullWidth value={nic || consumer?.nic || ''} onChange={handleChangeNic}/>
       </Grid>
       <Grid size={6}>
       <FormControl fullWidth>
@@ -139,7 +129,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={status || asset?.status || ''}
+          value={status || consumer?.status || ''}
           label="Status"
           onChange={handleChangeStatus}
         >
@@ -158,7 +148,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={statusReason || asset?.status_reason || ''}
+          value={statusReason || consumer?.status_reason || ''}
           label="Status Reason"
           onChange={handleChangeStatusReason}
         >
@@ -202,21 +192,6 @@ export default function EditAssetPage () {
 
 
 
-      <Grid size={2}>
-      <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Inflight ?</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        value={inflight}
-        onChange={handleInflightChange}
-      >
-        <FormControlLabel value="true" control={<Radio />} label="Yes" />
-        <FormControlLabel value="false" control={<Radio />} label="No"/>
-      </RadioGroup>
-    </FormControl>
-</Grid>
 
 
       <Grid size={5}>
@@ -225,7 +200,7 @@ export default function EditAssetPage () {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={brand || asset?.brand || ''}
+          value={brand || consumer?.brand || ''}
           label="Brand"
           onChange={handleBrand}
         >
@@ -236,10 +211,10 @@ export default function EditAssetPage () {
       <Grid size={12}>
       <TextField
       fullWidth
-            placeholder="Write a brief description about the created asset..."
+            placeholder="Write a brief description about the created consumer..."
             multiline
             rows={5}
-            value={description || asset?.description || ''}
+            value={description || consumer?.description || ''}
             onChange={handleChangeDescription}
             required
             />
@@ -250,12 +225,12 @@ export default function EditAssetPage () {
     </Grid>
 
     <Grid size={2}>
-    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/assets')} startIcon={<CancelIcon/>}>
+    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/consumers')} startIcon={<CancelIcon/>}>
   Cancel
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' onClick={editAsset} startIcon={<SaveIcon/>}>
+    <Button variant="contained" fullWidth type='submit' onClick={editConsumer} startIcon={<SaveIcon/>}>
   Save
 </Button>
     </Grid>

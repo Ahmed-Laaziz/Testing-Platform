@@ -12,8 +12,13 @@ router.get('/all-cases', verifyToken, caseController.getAllCases);
 // Get an case by ID
 router.get('/case/:id', verifyToken, caseController.getCaseById);
 
+// Get an case by Branch
+router.get('/casesByBranch/:branch', verifyToken, caseController.getCasesByBranch);
+
 // Get Cases Count
 router.get('/count-cases', verifyToken, caseController.getCaseCount);
+
+router.get('/count-cases/:branch', caseController.getCaseCountByBranch);
 // Update an case by ID
 router.put('/case/:id', verifyToken, caseController.updateCase);
 

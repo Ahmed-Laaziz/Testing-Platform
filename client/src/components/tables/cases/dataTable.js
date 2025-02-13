@@ -108,10 +108,24 @@ export default function DataTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Back link : " + backLink);
-        
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${backLink}/cases/all-cases`, {
+        const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
+  
+        if (!userEnv) {
+          console.warn("User environment (userEnv) is not set.");
+          return;
+        }
+  
+        // Define the branch based on userEnv
+        let branch;
+        if (userEnv === "DEV") {
+          branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
+        } else {
+          branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
+        }
+        
+        
+        const response = await axios.get(`${backLink}/cases/casesByBranch/${branch}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

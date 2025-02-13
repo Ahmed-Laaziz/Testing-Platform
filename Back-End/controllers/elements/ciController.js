@@ -37,6 +37,22 @@ exports.getCiById = async (req, res) => {
     }
 };
 
+exports.getCisByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params;
+        const cis = await Ci.find({ branch });
+
+        if (cis.length === 0) {
+            return res.status(404).json({ error: 'No cis found for this branch' });
+        }
+
+        res.status(200).json(cis);
+    } catch (error) {
+        console.error('Error retrieving cis by branch:', error);
+        res.status(500).json({ error: 'Failed to retrieve cis by branch' });
+    }
+};
+
 // Update ci by ID (PUT /cis/:id)
 exports.updateCi = async (req, res) => {
     try {
@@ -72,6 +88,23 @@ exports.getCiCount = async (req, res) => {
         res.status(200).json({ count: ciCount });
     } catch (error) {
         console.error('Error retrieving ci count:', error);
+        res.status(500).json({ error: 'Failed to retrieve ci count' });
+    }
+};
+
+// Get count of cis by branch (GET /cis/count/:branch)
+exports.getCiCountByBranch = async (req, res) => {
+    try {
+        const { branch } = req.params; // Extract branch from URL params
+
+        if (!branch) {
+            return res.status(400).json({ error: "Branch parameter is required" });
+        }
+
+        const ciCount = await Ci.countDocuments({ branch }); // Count cis for the given branch
+        res.status(200).json({ branch, count: ciCount });
+    } catch (error) {
+        console.error('Error retrieving ci count by branch:', error);
         res.status(500).json({ error: 'Failed to retrieve ci count' });
     }
 };

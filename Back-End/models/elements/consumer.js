@@ -2,13 +2,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ciSchema = new Schema({
+const consumersSchema = new Schema({
     type: {
         type: String,
         required: true,
         unique: false
     },
-    identifier: {
+    nic: {
         type: String,
         required: true
     },
@@ -16,21 +16,17 @@ const ciSchema = new Schema({
         type: String,
         required: false
     },
-    interaction_type: {
+    status_reason: {
         type: String,
         required: false
     },
-    entry_door: {
-        type: String,
-        required: false
-    },
-    created_by: {
+    brand: {
         type: String,
         required: false
     },
     description: {
         type: String,
-        required: true,
+        required: true
     },
     branch: {
         type: String,
@@ -40,6 +36,6 @@ const ciSchema = new Schema({
 , {timestamps: true})
 ;
 
-const Ci = mongoose.model('Ci', ciSchema);
+const Consumer = mongoose.model('Consumer', consumersSchema);
 
-module.exports = Ci;
+module.exports = Consumer;

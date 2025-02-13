@@ -36,6 +36,20 @@ export default function ValidationTextFields() {
     const [createdBy, setCreatedBy] = React.useState('');
     const [typification, setTypification] = React.useState('');
     const [entryDoor, setEntryDoor] = React.useState('');
+    const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
+  
+        if (!userEnv) {
+          console.warn("User environment (userEnv) is not set.");
+          return;
+        }
+  
+        // Define the branch based on userEnv
+        let branch;
+        if (userEnv === "DEV") {
+          branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
+        } else {
+          branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
+        }
     
     const handleClick = () => {
       setOpen(true);
@@ -85,7 +99,7 @@ export default function ValidationTextFields() {
     const fetchCaseCount = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get(`${backLink}/cases/count-cases` ,{
+            const response = await axios.get(`${backLink}/cases/count-cases/${branch}` ,{
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -113,6 +127,7 @@ export default function ValidationTextFields() {
     const addCase = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
         const token = localStorage.getItem('token');
+        
         const type = await generateTypeField();
         try {
           const url = backLink+"/cases/add-case"; // URL for the backend API
@@ -129,7 +144,7 @@ export default function ValidationTextFields() {
             channel: channel,
             subChannel: subChannel,
             entry_door: entryDoor,
-            branch: "Draft_tests_branch"
+            branch: branch
           };
       
           // Make a POST request to your backend API

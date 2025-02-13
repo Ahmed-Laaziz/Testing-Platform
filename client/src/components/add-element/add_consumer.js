@@ -24,11 +24,10 @@ const backLink = "http://localhost:5000";
 export default function ValidationTextFields() {
 
     const navigate = useNavigate(); 
-    const [identifier, setIdentifier] = React.useState('')
+    const [nic, setNic] = React.useState('')
     const [status, setStatus] = React.useState('');
-    const [interactionType, setInteractionType] = React.useState('');
-    const [entryDoor, setEntryDoor] = React.useState('');
-    const [createdBy, setCreatedBy] = React.useState('');
+    const [statusReason, setStatusReason] = React.useState('');
+    const [brand, setBrand] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
@@ -56,45 +55,41 @@ export default function ValidationTextFields() {
         setOpen(false);
     };
 
-    const handleChangeIdentifier = (event) => {
-        setIdentifier(event.target.value);
+    const handleChangeNic = (event) => {
+        setNic(event.target.value);
     }
     const handleChangeStatus = (event) => {
       setStatus(event.target.value);
     };
-    const handleChangeInteractionType = (event) => {
-        setInteractionType(event.target.value);
+    const handleChangeStatusReason = (event) => {
+        setStatusReason(event.target.value);
       };
-    const handleChangeEntryDoor = (event) => {
-        setEntryDoor(event.target.value)
-    }
-    const handleChangeCreatedBy = (event) => {        
-        setCreatedBy(event.target.value);
+    const handleBrand = (event) => {
+        setBrand(event.target.value)
     }
     const handleChangeDescription = (event) => {
         setDescription(event.target.value);
     }
-    
 
-    const fetchCiCount = async () => {
+    const fetchConsumerCount = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get(`${backLink}/cis/count-cis/${branch}` ,{
+            const response = await axios.get(`${backLink}/consumers/count-consumers/${branch}` ,{
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               });
             return response.data.count;
         } catch (error) {
-            console.error("Error fetching ci count:", error);
+            console.error("Error fetching consumer count:", error);
             return 0; // Default to 0 if there's an error
         }
     };
 
     const generateTypeField = async () => {
         try {
-          const ciCount = await fetchCiCount(); // Fetch the count of cis
-          const newType = `type${(ciCount + 1).toString().padStart(2, '0')}`; // Generate the new type value with leading zero if needed
+          const consumerCount = await fetchConsumerCount(); // Fetch the count of consumers
+          const newType = `type${(consumerCount + 1).toString().padStart(2, '0')}`; // Generate the new type value with leading zero if needed
           return newType;
         } catch (error) {
           console.error("Error generating type field:", error);
@@ -104,34 +99,19 @@ export default function ValidationTextFields() {
       
     
 
-    const addCi = async (event) => {
+    const addConsumer = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
         const token = localStorage.getItem('token');
-        const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
-  
-        if (!userEnv) {
-          console.warn("User environment (userEnv) is not set.");
-          return;
-        }
-  
-        // Define the branch based on userEnv
-        let branch;
-        if (userEnv === "DEV") {
-          branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
-          branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
-        }
         const type = await generateTypeField();
         console.log("this is the type value " + type);
         try {
-          const url = backLink+"/cis/add-ci"; // URL for the backend API
+          const url = backLink+"/consumers/add-consumer"; // URL for the backend API
           const requestData = {
             type: type,
-            identifier: identifier,
+            nic: nic,
             status: status,
-            interaction_type: interactionType,
-            entry_door: entryDoor,
-            created_by: createdBy,
+            status_reason: statusReason,
+            brand: brand,
             description: description,
             branch: branch
           };
@@ -144,7 +124,7 @@ export default function ValidationTextFields() {
           });
           // Show success Snackbar
           handleClick();
-          setTimeout(() => navigate('/datasets/cis'), 2000); // Redirect after 2 seconds
+          setTimeout(() => navigate('/datasets/consumers'), 2000); // Redirect after 2 seconds
         } catch (error) {
           console.error("Error fetching abstract:", error);
         } finally {
@@ -158,16 +138,16 @@ export default function ValidationTextFields() {
     {/* Snackbar for success message */}
   <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
   <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-    customer interaction created successfully!
+    Consumer created successfully!
   </Alert>
 </Snackbar>
     <Paper elevation={3} >
         <>&nbsp;</>
-        <center><h3>&nbsp;Add New Customer Interaction</h3></center>
-        <form onSubmit={addCi}>
+        <center><h3>&nbsp;Add New Consumer</h3></center>
+        <form onSubmit={addConsumer}>
         <Grid container spacing={2} sx={{padding:"2%"}}>
         <Grid size={6}>
-      <TextField id="outlined-basic" label="Identifier" required variant="outlined" fullWidth value={identifier} onChange={handleChangeIdentifier}/>
+      <TextField id="outlined-basic" label="Nic" required variant="outlined" fullWidth value={nic} onChange={handleChangeNic}/>
       </Grid>
       <Grid size={6}>
       <FormControl fullWidth>
@@ -181,52 +161,83 @@ export default function ValidationTextFields() {
         >
           <MenuItem value="Active">Active</MenuItem>
           <MenuItem value="Inactive">Inactive</MenuItem>
+          <MenuItem value="Total Suspension">Total Suspension</MenuItem>
+          <MenuItem value="Partial Suspension">Partial Suspension</MenuItem>
+          <MenuItem value="Terminate">Terminate</MenuItem>
         </Select>
       </FormControl>
       </Grid>
 
-      <Grid size={4}>
+      <Grid size={5}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Interaction Type</InputLabel>
+        <InputLabel id="demo-simple-select-label">Status Reason</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={interactionType}
-          label="Interaction Type"
-          onChange={handleChangeInteractionType}
+          value={statusReason}
+          label="Status Reason"
+          onChange={handleChangeStatusReason}
         >
-          <MenuItem value="Interaction Type 1">Interaction Type 1</MenuItem>
-          <MenuItem value="Interaction Type 2">Interaction Type 2</MenuItem>
+          <MenuItem value="Standard">Standard</MenuItem>
+          <MenuItem value="Portability">Portability</MenuItem>
+          <MenuItem value="Block">Block</MenuItem>
+          <MenuItem value="Reactivation">Reactivation</MenuItem>
+          <MenuItem value="Unblock">Unblock</MenuItem>
+          <MenuItem value="Change Ownership">Change Ownership</MenuItem>
+          <MenuItem value="Credit Control Request">Credit Control Request</MenuItem>
+          <MenuItem value="Change Billing Account">Change Billing Account</MenuItem>
+          <MenuItem value="Online">Online</MenuItem>
+          <MenuItem value="Paused">Paused</MenuItem>
+          <MenuItem value="Standby">Standby</MenuItem>
+          <MenuItem value="Offline">Offline</MenuItem>
+          <MenuItem value="Off">Off</MenuItem>
+          <MenuItem value="Not Ready">Not Ready</MenuItem>
+          <MenuItem value="Suspension by Customer Request">Suspension by Customer Request</MenuItem>
+          <MenuItem value="Fraud">Fraud</MenuItem>
+          <MenuItem value="Customer request">Customer request</MenuItem>
+          <MenuItem value="Dunning">Dunning</MenuItem>
+          <MenuItem value="Ausency/incapacity proven">Ausency/incapacity proven</MenuItem>
+          <MenuItem value="Customer Does Not Inform Reason">Customer Does Not Inform Reason</MenuItem>
+          <MenuItem value="Death">Death</MenuItem>
+          <MenuItem value="PPP Transfer - MIMO TPCR">PPP Transfer - MIMO TPCR</MenuItem>
+          <MenuItem value="Loss/Stolen">Loss/Stolen</MenuItem>
+          <MenuItem value="Proven Unemployment">Proven Unemployment</MenuItem>
+          <MenuItem value="Resolution by Contractual Alteration">Resolution by Contractual Alteration</MenuItem>
+          <MenuItem value="Free resolution Right">Free resolution Right</MenuItem>
+          <MenuItem value="No coverage">No coverage</MenuItem>
+          <MenuItem value="Social Internet Tariff - Eligibility loss">Social Internet Tariff - Eligibility loss</MenuItem>
+          <MenuItem value="Bankruptcy">Bankruptcy</MenuItem>
+          <MenuItem value="Corporate Client Manager's Request">Corporate Client Manager's Request</MenuItem>
+          <MenuItem value="Crushed/Smashed SIM Portability">Crushed/Smashed SIM Portability</MenuItem>
+          <MenuItem value="Insolvency/Dissolution/Liquidation">Insolvency/Dissolution/Liquidation</MenuItem>
+          <MenuItem value="Superior Approval">Superior Approval</MenuItem>
+          <MenuItem value="Transfer to other Product/Service MEO Mobile">Transfer to other Product/Service MEO Mobile</MenuItem>
         </Select>
       </FormControl>
       </Grid>
 
-      <Grid size={4}>
+
+
+
+
+      <Grid size={5}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Entry Door</InputLabel>
+        <InputLabel id="demo-simple-select-label">Brand</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={entryDoor}
-          label="Entry Door"
-          onChange={handleChangeEntryDoor}
+          value={brand}
+          label="Brand"
+          onChange={handleBrand}
         >
-          <MenuItem value="Entry Door 1">Entry Door 1</MenuItem>
-          <MenuItem value="Entry Door 2">Entry Door 2</MenuItem>
+          <MenuItem value="UZO">UZO</MenuItem>
         </Select>
       </FormControl>
       </Grid>
-
-      <Grid size={4}>
-      <TextField id="outlined-basic" label="Created By" variant="outlined" fullWidth value={createdBy} onChange={handleChangeCreatedBy}/>
-      </Grid>
-
-
-
       <Grid size={12}>
       <TextField
       fullWidth
-            placeholder="Write a brief description about the created ci..."
+            placeholder="Write a brief description about the created consumer..."
             multiline
             rows={5}
             value={description}
@@ -240,7 +251,7 @@ export default function ValidationTextFields() {
     </Grid>
 
     <Grid size={2}>
-    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/cis')} startIcon={<CancelIcon/>}>
+    <Button variant="outlined" fullWidth onClick={() => navigate('/datasets/consumers')} startIcon={<CancelIcon/>}>
   Cancel
 </Button>
     </Grid>

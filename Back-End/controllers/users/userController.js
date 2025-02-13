@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 exports.addUser = async (req, res, next) => {
     try {
       // Extract user data from request body
-      const { first_name, last_name, email, password } = req.body;
+      const { first_name, last_name, email, password , environment} = req.body;
   
       // Check if user with the same email already exists
       const existingUser = await User.findOne({ email });
@@ -23,6 +23,7 @@ exports.addUser = async (req, res, next) => {
         last_name,
         email,
         password: hashedPassword, // Store the hashed password
+        environment
       });
   
       // Save the new user to the database

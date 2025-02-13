@@ -80,13 +80,13 @@ const [passwordError, setPasswordError] = useState('');
       const token = response.data.token;
 
       updateUser(response.data.user);
-      localStorage.setItem('user', response.data.user)
-      localStorage.setItem('type', response.data.user.__t)
+      localStorage.setItem('userEnv', response.data.user.environment);
+      //localStorage.setItem('type', response.data.user.__t)
 
       setToken(token);
       // Save the token in localStorage
     localStorage.setItem('token', token);
-      navigate(`/home`);
+      navigate(`/dashboard`);
       // Redirect the user or perform any necessary actions upon successful login
     } catch (error) {
       if (error.response.status === 400 && password !== ''){
@@ -162,7 +162,7 @@ const [passwordError, setPasswordError] = useState('');
   required
   fullWidth
   name="password"
-  label="Mot de passe"
+  label="Password"
   type="password"
   id="password"
   autoComplete="current-password"
@@ -171,7 +171,7 @@ const [passwordError, setPasswordError] = useState('');
 
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="se souvenir de moi"
+                label="Remember me"
               />
               <Button
                 type="submit"

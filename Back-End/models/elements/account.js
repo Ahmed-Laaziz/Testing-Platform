@@ -6,7 +6,7 @@ const accountSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     tariff: {
         type: String,

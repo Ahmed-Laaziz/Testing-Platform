@@ -6,7 +6,7 @@ const caseSchema = new Schema({
     type: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     description: {
         type: String,

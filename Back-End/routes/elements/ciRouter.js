@@ -12,8 +12,13 @@ router.get('/all-cis', verifyToken, ciController.getAllCis);
 // Get an ci by ID
 router.get('/ci/:id', verifyToken, ciController.getCiById);
 
+// Get an ci by Branch
+router.get('/cisByBranch/:branch', verifyToken, ciController.getCisByBranch);
+
 // Get Cis Count
 router.get('/count-cis', verifyToken, ciController.getCiCount);
+
+router.get('/count-cis/:branch', ciController.getCiCountByBranch);
 // Update an ci by ID
 router.put('/ci/:id', verifyToken, ciController.updateCi);
 
