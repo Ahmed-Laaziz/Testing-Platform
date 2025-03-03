@@ -35,8 +35,8 @@ const style = {
 export default function DataTable() {
   const navigate = useNavigate();
 
-  const handleUpdateClick = (order) => {
-    navigate('/edit-order', { state: { orderId: order._id } }); // Pass order ID via state
+  const handleUpdateClick = (billing) => {
+    navigate('/edit-billing', { state: { billingId: billing._id } }); // Pass billing ID via state
 };
 
   // Custom Toolbar component
@@ -50,8 +50,8 @@ export default function DataTable() {
         />
         <Box sx={{ flexGrow: 1 }} />
         {/* Button to open modal */}
-        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-order')} >
-          Add Order
+        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-billing')} >
+          Add Billing
         </Button>
         <GridToolbarExport
           slotProps={{
@@ -68,10 +68,8 @@ export default function DataTable() {
 
   const columns = [
     { field: 'type', headerName: 'Type', width: 130 },
-    { field: 'identifier', headerName: 'Identifier', width: 130 },
+    { field: 'number', headerName: 'Number', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'fulfillment_status', headerName: 'Fulfillment Status', width: 130 },
-    { field: 'owner', headerName: 'Owner', width: 130 },
     { field: 'description', headerName: 'Description', width: 130 },
     {
       field: 'actions',
@@ -118,8 +116,8 @@ export default function DataTable() {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
   
-        console.log("Fetching cis for branch:", branch);
-        const response = await axios.get(`${backLink}/orders/ordersByBranch/${branch}`, {
+        console.log("Fetching billings for branch:", branch);
+        const response = await axios.get(`${backLink}/billings/billingsByBranch/${branch}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

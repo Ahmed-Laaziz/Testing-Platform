@@ -22,7 +22,7 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import GavelIcon from '@mui/icons-material/Gavel';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import KeyOffIcon from '@mui/icons-material/KeyOff';
-
+import BillingIcon from '@mui/icons-material/LocalAtm';
 
 
 //const user = JSON.parse(localStorage.getItem('user') || '{}'); 
@@ -49,12 +49,13 @@ const NAVIGATION = [
     title: 'Entities',
     icon: <BarChartIcon />,
     children: [
-      { segment: 'accounts', title: 'Accounts', icon: <GroupAddIcon /> },
+      //{ segment: 'accounts', title: 'Accounts', icon: <GroupAddIcon /> },
       { segment: 'orders', title: 'Orders', icon: <ShoppingCartIcon /> },
       { segment: 'assets', title: 'Assets', icon: <AssetIcon /> },
       { segment: 'cases', title: 'Cases', icon: <CaseIcon /> },
       { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },
       { segment: 'consumers', title: 'Consumers', icon: <GroupAddIcon /> },
+      { segment: 'billings', title: 'Billings', icon: <BillingIcon /> },
     ],
   },
   {

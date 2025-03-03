@@ -50,7 +50,7 @@ export default function DataTable() {
         />
         <Box sx={{ flexGrow: 1 }} />
         {/* Button to open modal */}
-        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-account')} >
+        <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => navigate('/add-account')} disabled>
           Add Account
         </Button>
         <GridToolbarExport

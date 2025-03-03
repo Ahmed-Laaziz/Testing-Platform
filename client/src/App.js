@@ -41,6 +41,10 @@ import AllOrders from "./pages/all-orders/orders";
 import AddOrder from "./pages/add/order";
 import EditOrder from "./pages/edit/order";
 
+import AllBillings from "./pages/all-billings/billings";
+import AddBilling from "./pages/add/billing";
+import EditBilling from "./pages/edit/billing";
+
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
 import { UserProvider } from './context/userContext';
@@ -90,7 +94,9 @@ export default function App() {
         <Route path="add-order" element={<AddOrder/>} />
         <Route path="edit-order" element={<EditOrder/>} />
         <Route path="datasets/orders" element={<AllOrders/>} />
-
+        <Route path="add-billing" element={<AddBilling/>} />
+        <Route path="edit-billing" element={<EditBilling/>} />
+        <Route path="datasets/billings" element={<AllBillings/>} />
       </Routes>
     </BrowserRouter>
     </UserProvider>

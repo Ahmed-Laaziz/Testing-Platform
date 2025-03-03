@@ -105,6 +105,7 @@ export default function EditConsumerPage () {
         }
       };
 
+      
     return (
         <>
         {/* Snackbar for success message */}

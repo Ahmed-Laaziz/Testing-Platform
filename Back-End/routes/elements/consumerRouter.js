@@ -10,7 +10,7 @@ router.post('/add-consumer', verifyToken, consumerController.createConsumer);
 router.get('/all-consumers', verifyToken, consumerController.getAllConsumer);
 
 // Get an consumer by ID
-router.get('/consumer/:branch', verifyToken, consumerController.getConsumerById);
+router.get('/consumer/:id', verifyToken, consumerController.getConsumerById);
 
 // Get an ci by Branch
 router.get('/consumersByBranch/:branch', verifyToken, consumerController.getConsumersByBranch);

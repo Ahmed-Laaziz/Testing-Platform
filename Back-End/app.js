@@ -12,6 +12,7 @@ var orderRouter = require('./routes/elements/orderRouter');
 var ciRouter = require('./routes/elements/ciRouter');
 var accountRouter = require('./routes/elements/accountRouter');
 var consumerRouter = require('./routes/elements/consumerRouter');
+var billingRouter = require('./routes/elements/billingRouter');
 // PERSONAS
 
 const processRoutes = require('./routes/personas/processRouter');
@@ -47,6 +48,7 @@ app.use('/orders', orderRouter);
 app.use('/cis', ciRouter);
 app.use('/accounts', accountRouter);
 app.use('/consumers', consumerRouter);
+app.use('/billings',billingRouter);
 
 // Personas Routes
 app.use('/processes', processRoutes);
