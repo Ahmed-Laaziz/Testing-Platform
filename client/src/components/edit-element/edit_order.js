@@ -169,6 +169,8 @@ export default function EditOrderPage () {
         >
           <MenuItem value="Activated">Activated</MenuItem>
           <MenuItem value="Draft">Draft</MenuItem>
+          <MenuItem value="Canceled">Canceled</MenuItem>
+          
           <MenuItem value="Submission Actions">Submission Actions</MenuItem>
         </Select>
       </FormControl>
