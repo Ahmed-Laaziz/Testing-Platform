@@ -138,8 +138,8 @@ export default function EditCiPage () {
           label="Status"
           onChange={handleChangeStatus}
         >
-          <MenuItem value="Active">Active</MenuItem>
-          <MenuItem value="Inactive">Inactive</MenuItem>
+          <MenuItem value="Open">Open</MenuItem>
+          <MenuItem value="Closed">Closed</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -154,8 +154,8 @@ export default function EditCiPage () {
           label="Interaction Type"
           onChange={handleChangeInteractionType}
         >
-          <MenuItem value="Interaction Type 1">Interaction Type 1</MenuItem>
-          <MenuItem value="Interaction Type 2">Interaction Type 2</MenuItem>
+          <MenuItem value="Voice Inbound">Voice Inbound</MenuItem>
+          <MenuItem value="SMS Outbound">SMS Outbound</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -170,7 +170,7 @@ export default function EditCiPage () {
           label="Entry Door"
           onChange={handleChangeEntryDoor}
         >
-          <MenuItem value="Entry Door 1">Entry Door 1</MenuItem>
+          <MenuItem value="Out UZO ITC ST">Out UZO ITC ST</MenuItem>
           <MenuItem value="Entry Door 2">Entry Door 2</MenuItem>
         </Select>
       </FormControl>

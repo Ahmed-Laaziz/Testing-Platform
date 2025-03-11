@@ -171,8 +171,14 @@ export default function EditCasePage () {
           label="Status"
           onChange={handleChangeStatus}
         >
-          <MenuItem value="Active">Active</MenuItem>
-          <MenuItem value="Inactive">Inactive</MenuItem>
+          <MenuItem value="Open">Open</MenuItem>
+          <MenuItem value="Closed">Closed</MenuItem>
+          <MenuItem value="In Treatment">In Treatment</MenuItem>
+          <MenuItem value="Forwarded">Forwarded</MenuItem>
+          <MenuItem value="Pending Customer">Pending Customer</MenuItem>
+          <MenuItem value="Cancelled">Cancelled</MenuItem>
+          <MenuItem value="New">New</MenuItem>
+          <MenuItem value="Sending">Sending</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -261,7 +267,7 @@ export default function EditCasePage () {
           label="Case Origin"
           onChange={handleChangeCaseOrigin}
         >
-          <MenuItem value="Case Origin 1">Case Origin 1</MenuItem>
+          <MenuItem value="Cliente">Cliente</MenuItem>
           <MenuItem value="Case Origin 2">Case Origin 2</MenuItem>
         </Select>
       </FormControl>
@@ -277,8 +283,8 @@ export default function EditCasePage () {
           label="Entry Door"
           onChange={handleChangeEntryDoor}
         >
-          <MenuItem value="Entry Door 1">Entry Door 1</MenuItem>
-          <MenuItem value="Entry Door 2">Entry Door 2</MenuItem>
+          <MenuItem value="Out UZO ITC ST">Out UZO ITC ST</MenuItem>
+          <MenuItem value="Test SIT">Test SIT</MenuItem>
         </Select>
       </FormControl>
       </Grid>
