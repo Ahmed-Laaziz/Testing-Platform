@@ -45,6 +45,10 @@ import AllBillings from "./pages/all-billings/billings";
 import AddBilling from "./pages/add/billing";
 import EditBilling from "./pages/edit/billing";
 
+import AllContracts from "./pages/all-contracts/contracts";
+import AddContract from "./pages/add/contract";
+import EditContract from "./pages/edit/contract";
+
 import DataTable from './components/tables/assets/dataTable';  // Import the table component
 import { TokenProvider } from './authentication/tokenContext';
 import { UserProvider } from './context/userContext';
@@ -97,6 +101,9 @@ export default function App() {
         <Route path="add-billing" element={<AddBilling/>} />
         <Route path="edit-billing" element={<EditBilling/>} />
         <Route path="datasets/billings" element={<AllBillings/>} />
+        <Route path="add-contract" element={<AddContract/>} />
+        <Route path="edit-contract" element={<EditContract/>} />
+        <Route path="datasets/contracts" element={<AllContracts/>} />
       </Routes>
     </BrowserRouter>
     </UserProvider>

@@ -32,6 +32,7 @@ export default function ValidationTextFields() {
     const [inflight, setInflight] = React.useState('false');
     const [statusReason, setStatusReason] = React.useState('');
     const [open, setOpen] = React.useState(false);
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     const userEnv = localStorage.getItem('userEnv'); // Retrieve userEnv
   
         if (!userEnv) {
@@ -108,6 +109,8 @@ export default function ValidationTextFields() {
 
     const addOrder = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
+      if (isSubmitting) return; // Protection en plus
+         setIsSubmitting(true); // désactive le bouton
         const token = localStorage.getItem('token');
         
         const type = await generateTypeField();
@@ -139,7 +142,7 @@ export default function ValidationTextFields() {
           console.error("Error fetching abstract:", error);
         } finally {
           // Hide the spinner after the backend request is completed
-          // setIsLoading(false);
+          setIsSubmitting(false);
         }
       };
       
@@ -309,8 +312,14 @@ export default function ValidationTextFields() {
 </Button>
     </Grid>
     <Grid size={2}>
-    <Button variant="contained" fullWidth type='submit' startIcon={<SaveIcon/>}>
-  Save
+    <Button
+  variant="contained"
+  fullWidth
+  type="submit"
+  startIcon={<SaveIcon />}
+  disabled={isSubmitting} 
+>
+  {isSubmitting ? 'Saving...' : 'Save'}
 </Button>
     </Grid>
     

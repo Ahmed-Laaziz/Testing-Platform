@@ -21,7 +21,7 @@ function Dashboard() {
         const userEnv = localStorage.getItem('userEnv');
         const branch = userEnv === "DEV" ? "New_DevCI_Draft" : "Draft_tests_branch";
 
-        const endpoints = ['consumer', 'ci', 'order', 'case', 'asset'];
+        const endpoints = ['consumer', 'ci', 'order', 'case', 'asset','contract'];
         const requests = endpoints.map(entity => 
           axios.get(`${backLink}/${entity}s/count-${entity}s/${branch}`, { headers: { Authorization: `Bearer ${token}` } })
         );
@@ -57,7 +57,7 @@ function Dashboard() {
     labels: Object.keys(data),
     datasets: [{
       data: Object.values(data),
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9C27B0'],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9C27B0','#FF9800'],
     }],
   };
 

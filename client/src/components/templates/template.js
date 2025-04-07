@@ -23,7 +23,7 @@ import GavelIcon from '@mui/icons-material/Gavel';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import KeyOffIcon from '@mui/icons-material/KeyOff';
 import BillingIcon from '@mui/icons-material/LocalAtm';
-
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 //const user = JSON.parse(localStorage.getItem('user') || '{}'); 
 //const userEnv = user.environment || 'UNKNOWN'; 
@@ -56,6 +56,7 @@ const NAVIGATION = [
       { segment: 'cis', title: 'Customer Interactions', icon: <DescriptionIcon /> },
       { segment: 'consumers', title: 'Consumers', icon: <GroupAddIcon /> },
       { segment: 'billings', title: 'Billings', icon: <BillingIcon /> },
+      { segment: 'contracts', title: 'Contracts', icon: <ReceiptLongIcon /> },
     ],
   },
   {
