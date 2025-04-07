@@ -67,17 +67,17 @@ export default function DataTable() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const columns = [
-    { field: 'type', headerName: 'Type', width: 130 },
+    { field: 'type', headerName: 'Type', width: 70 },
     { field: 'identifier', headerName: 'Identifier', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
     { field: 'status_reason', headerName: 'Status Reason', width: 130 },
     { field: 'brand', headerName: 'Brand', width: 130 },
-    { field: 'inflight', headerName: 'Inflight', type: 'boolean', width: 130 },
-    { field: 'description', headerName: 'Description', width: 130 },
+    { field: 'inflight', headerName: 'Inflight', type: 'boolean', width: 70 },
+    { field: 'description', headerName: 'Description', width: 530 },
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 210,
+      width: 130,
       renderCell: (params) => (
         <Stack spacing={1} sx={{ width: 1, py: 1 }}>
           <Button
@@ -93,8 +93,8 @@ export default function DataTable() {
 
   const responsiveColumns = columns.map((column) => ({
     ...column,
-    width: isSmallScreen ? 'auto' : 150,
-    flex: 1,
+    width: isSmallScreen ? column.width : column.width,
+    flex: 2,
   }));
 
   const [rows, setRows] = useState([]);

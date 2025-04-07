@@ -156,6 +156,8 @@ export default function EditCiPage () {
         >
           <MenuItem value="Voice Inbound">Voice Inbound</MenuItem>
           <MenuItem value="SMS Outbound">SMS Outbound</MenuItem>
+          <MenuItem value="Inbound">Inbound</MenuItem>
+          <MenuItem value="Outbound">Outbound</MenuItem>
         </Select>
       </FormControl>
       </Grid>
