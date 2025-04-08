@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-
+import { Typography} from '@mui/material';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -135,6 +135,10 @@ export default function DataTable() {
   }, []);
 
   return (
+    <Box sx={{ padding: '20px' }}>
+        {loading ? (
+          <Typography>Loading...</Typography>
+        ) : (
     <>
       <Paper sx={{ height: '100%', width: '100%' }}>
         <DataGrid
@@ -151,5 +155,7 @@ export default function DataTable() {
         />
       </Paper>
     </>
+     )}
+            </Box>
   );
 }

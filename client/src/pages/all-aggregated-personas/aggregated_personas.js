@@ -57,7 +57,7 @@ export default function Home() {
       ) : showErrorPage ? (
         <ErrorPage />
       ) : (
-        <></>
+       <DashboardLayoutBasic/>
       )}
     </div>
   );

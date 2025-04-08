@@ -19,6 +19,8 @@ import {
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid';
 
+import { Typography} from '@mui/material';
+
 const backLink = "http://localhost:5000";
 const style = {
   position: 'absolute',
@@ -133,6 +135,10 @@ export default function DataTable() {
   }, []);
 
   return (
+    <Box sx={{ padding: '20px' }}>
+    {loading ? (
+      <Typography>Loading...</Typography>
+    ) : (
     <>
       <Paper sx={{ height: '100%', width: '100%' }}>
         <DataGrid
@@ -149,5 +155,7 @@ export default function DataTable() {
         />
       </Paper>
     </>
+       )}
+        </Box>
   );
 }
