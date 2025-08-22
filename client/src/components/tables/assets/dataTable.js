@@ -18,6 +18,13 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+dayjs.extend(relativeTime);
 
 const backLink = "http://localhost:5000";
 const style = {
@@ -34,10 +41,19 @@ const style = {
 
 export default function DataTable() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const handleUpdateClick = (asset) => {
     navigate('/edit-asset', { state: { assetId: asset._id } }); // Pass asset ID via state
 };
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpen(false);
+    };
 
   // Custom Toolbar component
   function CustomToolbar() {
@@ -74,21 +90,59 @@ export default function DataTable() {
     { field: 'brand', headerName: 'Brand', width: 130 },
     { field: 'inflight', headerName: 'Inflight', type: 'boolean', width: 70 },
     { field: 'description', headerName: 'Description', width: 530 },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 130,
-      renderCell: (params) => (
-        <Stack spacing={1} sx={{ width: 1, py: 1 }}>
-          <Button
-            variant="text"
-            size="small"
-            startIcon={<EditIcon />}
-            onClick={() => handleUpdateClick(params.row)}
-          />
-        </Stack>
-      ),
+    { field: 'isUptoDate', headerName: 'is Up to Date ?', width: 130,
+      valueFormatter: (params) => {
+        if (params) return 'Yes'
+        else if (!params) return 'No'
+      }
     },
+    {
+    field: 'updatedAt',
+    headerName: 'Last Modified',
+    width: 180,
+    //valueGetter: (params) => params.row?.updatedAt ?? null,
+    valueFormatter: (params) => {
+      if (!params) return '';
+      return dayjs(params).fromNow(); // => "3 hours ago"
+    }
+  }
+,
+    {
+  field: 'actions',
+  headerName: 'Actions',
+  width: 180,
+  renderCell: (params) => {
+    const row = params.row;
+
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(row.soqlQuery || '');
+        setOpen(true);
+      } catch (err) {
+        console.error("Copy failed", err);
+      }
+    };
+
+    return (
+      <Stack spacing={0} direction="row">
+        <Button
+          variant='text'
+          size="small"
+          startIcon={<EditIcon />}
+          onClick={() => handleUpdateClick(row)}
+        />
+        <Button
+          variant="text"
+          size="small"
+          onClick={handleCopy}
+          startIcon = {<ContentCopyIcon />}
+        />
+          
+      </Stack>
+    );
+  },
+}
+
   ];
 
   const responsiveColumns = columns.map((column) => ({
@@ -116,7 +170,11 @@ export default function DataTable() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        }
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
   
@@ -140,11 +198,17 @@ export default function DataTable() {
   }, []);
 
   return (
+    
     <Box sx={{ padding: '20px' }}>
         {loading ? (
           <Typography>Loading...</Typography>
         ) : (
     <>
+    <Snackbar open={open} autoHideDuration={500} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+            Text copied successfully!
+          </Alert>
+        </Snackbar>
       <Paper sx={{ height: '100%', width: '100%' }}>
         <DataGrid
           rows={rows}

@@ -11,6 +11,10 @@ const assetSchema = new Schema({
         type: String,
         required: true
     },
+    id: {
+        type: String,
+        required: false
+    },
     status: {
         type: String,
         required: false
@@ -31,6 +35,15 @@ const assetSchema = new Schema({
     description: {
         type: String,
         required: true
+    },
+    isUptoDate: {
+        type: Boolean,
+        required: false,
+        default: true
+    },
+    soqlQuery: {
+        type: String,
+        required: false
     },
     branch: {
         type: String,

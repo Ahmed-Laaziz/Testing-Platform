@@ -32,6 +32,7 @@ export default function EditAssetPage () {
     const [statusReason, setStatusReason] = React.useState('');
     const [brand, setBrand] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const [soql, setSoql] = React.useState('')
     const [inflight, setInflight] = React.useState('false');
     const [open, setOpen] = useState(false);
     
@@ -66,6 +67,10 @@ export default function EditAssetPage () {
     const handleChangeDescription = (event) => {
         setDescription(event.target.value);
         asset.description = event.target.value;
+    }
+    const handleSoql = (event) => {
+      setSoql(event.target.value);
+      asset.soqlQuery = event.target.value;
     }
     const handleInflightChange = (event) => {        
         setInflight(event.target.value);
@@ -196,6 +201,7 @@ export default function EditAssetPage () {
           <MenuItem value="Insolvency/Dissolution/Liquidation">Insolvency/Dissolution/Liquidation</MenuItem>
           <MenuItem value="Superior Approval">Superior Approval</MenuItem>
           <MenuItem value="Transfer to other Product/Service MEO Mobile">Transfer to other Product/Service MEO Mobile</MenuItem>
+          <MenuItem value="Transfer to prepaid - old stack">Transfer to prepaid - old stack</MenuItem>
         </Select>
       </FormControl>
       </Grid>
@@ -233,7 +239,7 @@ export default function EditAssetPage () {
         </Select>
       </FormControl>
       </Grid>
-      <Grid size={12}>
+      <Grid size={6}>
       <TextField
       fullWidth
             placeholder="Write a brief description about the created asset..."
@@ -241,6 +247,18 @@ export default function EditAssetPage () {
             rows={5}
             value={description || asset?.description || ''}
             onChange={handleChangeDescription}
+            required
+            />
+            </Grid>
+
+             <Grid size={6}>
+      <TextField
+      fullWidth
+            placeholder="Write the SOQL Query For data creation..."
+            multiline
+            rows={5}
+            value={description || asset?.soqlQuery || ''}
+            onChange={handleSoql}
             required
             />
             </Grid>

@@ -122,7 +122,7 @@ function DashboardLayoutBasic({ window, component: CustomComponent }) {
   }, []);
 
   const FILTERED_NAVIGATION = NAVIGATION.filter((item) => {
-    if (userEnv === 'SIT') {
+    if (userEnv === 'SIT' || userEnv === 'UAT') {
       return true; // Affiche tout pour SIT
     }
   

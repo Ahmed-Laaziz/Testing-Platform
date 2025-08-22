@@ -43,7 +43,11 @@ export default function ValidationTextFields() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        } 
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
     const handleClick = () => {
@@ -121,7 +125,11 @@ export default function ValidationTextFields() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        } 
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
         const type = await generateTypeField();

@@ -80,6 +80,12 @@ export default function DataTable() {
     { field: 'subChannel', headerName: 'Sub Channel', width: 130 },
     { field: 'created_by', headerName: 'Created By', width: 130 },
     {
+  field: 'updatedAt',
+  headerName: 'Last Modified',
+  width: 180,
+  
+},
+    {
       field: 'actions',
       headerName: 'Actions',
       width: 210,
@@ -120,7 +126,11 @@ export default function DataTable() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        } 
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
         

@@ -19,7 +19,11 @@ function Dashboard() {
       try {
         const token = localStorage.getItem('token');
         const userEnv = localStorage.getItem('userEnv');
-        const branch = userEnv === "DEV" ? "New_DevCI_Draft" : "Draft_tests_branch";
+        const branch = userEnv === "DEV" 
+          ? "New_DevCI_Draft" 
+          : userEnv === "UAT" 
+            ? "UAT_branch" 
+            : "Draft_tests_branch";
 
         const endpoints = ['consumer', 'ci', 'order', 'case', 'asset','contract'];
         const requests = endpoints.map(entity => 

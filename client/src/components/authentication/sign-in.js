@@ -149,7 +149,7 @@ const [passwordError, setPasswordError] = useState('');
   margin="normal"
   required
   fullWidth
-  id="email"
+  id="new_email_id"
   label="Email"
   name="email"
   autoComplete="email"

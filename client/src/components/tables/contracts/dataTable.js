@@ -112,7 +112,11 @@ export default function DataTable() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        } 
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
   

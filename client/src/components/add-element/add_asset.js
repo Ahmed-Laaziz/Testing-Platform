@@ -43,7 +43,11 @@ export default function ValidationTextFields() {
         let branch;
         if (userEnv === "DEV") {
           branch = "New_DevCI_Draft"; // Replace with the actual DEV branch name
-        } else {
+        } 
+        else if (userEnv === "UAT") {
+          branch = "UAT_branch";
+        }
+        else {
           branch = "Draft_tests_branch"; // Use userEnv as branch name for other environments
         }
     const handleClick = () => {
@@ -223,6 +227,7 @@ export default function ValidationTextFields() {
           <MenuItem value="Insolvency/Dissolution/Liquidation">Insolvency/Dissolution/Liquidation</MenuItem>
           <MenuItem value="Superior Approval">Superior Approval</MenuItem>
           <MenuItem value="Transfer to other Product/Service MEO Mobile">Transfer to other Product/Service MEO Mobile</MenuItem>
+          <MenuItem value="Transfer to prepaid - old stack">Transfer to prepaid - old stack</MenuItem>
         </Select>
       </FormControl>
       </Grid>
